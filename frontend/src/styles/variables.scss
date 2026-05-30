@@ -1,1 +1,48 @@
-// MUST BE ADDED
+$primary: #6c63ff;
+$primary-hover: #5a52d5;
+$primary-light: rgba(108, 99, 255, 0.1);
+
+$bg-base: #f8f7ff;
+$bg-surface: #ffffff;
+$bg-card: #ffffff;
+$bg-hover: #f0eeff;
+
+$text-primary: #0f0f0f;
+$text-secondary: #555555;
+$text-muted: #999999;
+
+$border: #e8e6ff;
+$border-focus: #6c63ff;
+
+$success: #22c55e;
+$error: #ef4444;
+$warning: #f59e0b;
+
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 20px;
+$radius-full: 9999px;
+
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 48px;
+$spacing-3xl: 64px;
+
+$font-roboto: "Roboto", sans-serif;
+$font-sm: 0.875rem;
+$font-md: 1rem;
+$font-lg: 1.25rem;
+$font-xl: 1.5rem;
+$font-2xl: 2rem;
+$font-3xl: 3rem;
+
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+$shadow-primary: 0 4px 20px rgba(108, 99, 255, 0.25);
+
+$transition: all 0.2s ease;
+$transition-slow: all 0.4s ease;

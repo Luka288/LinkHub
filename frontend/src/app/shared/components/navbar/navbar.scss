@@ -1,0 +1,22 @@
+@use "../../../../styles/variables.scss" as *;
+@use "../../../../styles/mixins.scss" as *;
+
+nav {
+  width: 100%;
+  background-color: $bg-base;
+  box-sizing: border-box;
+  padding: 10px;
+
+  #logo-side {
+    .logo {
+      color: #0f0f0f;
+      font-family: $font-roboto;
+      font-size: $font-3xl;
+      font-weight: 600;
+
+      span {
+        color: #6c63ff;
+      }
+    }
+  }
+}
