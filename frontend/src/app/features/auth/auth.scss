@@ -1,0 +1,15 @@
+@use "../../../styles/mixins.scss" as *;
+@use "../../../styles/variables.scss" as *;
+
+#auth-section {
+  max-width: 450px;
+  // height: 350px;
+  background-color: white;
+  margin: auto;
+  margin-top: 150px;
+  box-sizing: border-box;
+  padding: 15px;
+  box-shadow: $shadow-md;
+  border-radius: $radius-md;
+  @include flex();
+}
