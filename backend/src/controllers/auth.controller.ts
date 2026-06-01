@@ -32,10 +32,24 @@ export const register = async (request: Request, response: Response) => {
       { expiresIn: "7d" },
     );
 
-    response.status(201).json({ token, user: newUser });
+    response.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    response.status(201).json({
+      user: {
+        id: newUser.id,
+        username: newUser.username,
+        email: newUser.email,
+        avatar_url: null,
+        bio: null,
+      },
+    });
   } catch (error) {
     console.error("Register error:", error);
-
     response.status(500).json({ error: "Something went wrong" });
   }
 };
@@ -47,10 +61,15 @@ export const login = async (request: Request, response: Response) => {
     const result = await pool.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
-
     const user = result.rows[0];
 
     if (!user) {
+      response.status(401).json({ error: "Invalid email or password" });
+      return;
+    }
+
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) {
       response.status(401).json({ error: "Invalid email or password" });
       return;
     }
@@ -61,16 +80,28 @@ export const login = async (request: Request, response: Response) => {
       { expiresIn: "7d" },
     );
 
+    response.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
     response.json({
-      token,
       user: {
         id: user.id,
         username: user.username,
         email: user.email,
+        avatar_url: user.avatar_url,
+        bio: user.bio,
       },
     });
   } catch (error) {
-    console.error("Login error:", error);
     response.status(500).json({ error: "Something went wrong" });
   }
+};
+
+export const logout = async (request: Request, response: Response) => {
+  response.clearCookie("token");
+  response.json({ message: "Logged out" });
 };

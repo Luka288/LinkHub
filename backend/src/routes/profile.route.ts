@@ -6,7 +6,7 @@ const router = Router();
 
 router.use(authMiddleware);
 
-router.get("/:id", getProfile);
+router.get("/", getProfile);
 router.patch("/", updateProfile);
 
 export default router;

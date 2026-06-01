@@ -8,30 +8,19 @@ export const authMiddleware = (
   next: NextFunction,
 ) => {
   try {
-    const authHeader = request.headers.authorization;
-
-    if (!authHeader) {
-      response
-        .status(401)
-        .json({ error: "invalid authorization headers, no token provided" });
-      return;
-    }
-
-    const token = authHeader.split(" ")[1];
+    const token = request.cookies?.token;
 
     if (!token) {
-      response.status(401).json({ error: "invalid token format." });
+      response.status(401).json({ error: "No token provided" });
       return;
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
       userId: number;
     };
-
     (request as any).user = decoded;
-
     next();
-  } catch (e) {
-    return response.status(401).json({ error: "Unauthorized" });
+  } catch {
+    response.status(401).json({ error: "Unauthorized" });
   }
 };

@@ -5,15 +5,18 @@ import authRoute from "./routes/auth.route";
 import linksRoute from "./routes/links.route";
 import profileRoute from "./routes/profile.route";
 import publicRoute from "./routes/public.route";
+import cookieParser from "cookie-parser";
 import "./config/db";
 
 dotenv.config();
 
 const app = express();
 
+app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.ALLOWED_ORIGIN || "http://localhost:4200",
+    credentials: true,
   }),
 );
 
