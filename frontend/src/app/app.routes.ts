@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth-guard';
+import { guestGuard } from './core/guards/guest-guard';
 
 export const routes: Routes = [
   // unprotected public route
@@ -8,6 +10,7 @@ export const routes: Routes = [
       import('./layouts/public-layout/public-layout').then(
         (m) => m.PublicLayout,
       ),
+    canActivate: [guestGuard],
     children: [
       {
         path: '',
@@ -44,6 +47,19 @@ export const routes: Routes = [
           },
         ],
       },
+    ],
+  },
+
+  // protected dashboard routes
+  {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./layouts/private-layout/private-layout').then(
+        (m) => m.PrivateLayout,
+      ),
+    canActivate: [authGuard],
+    children: [
+      // dashboard routes (settings, profile)
     ],
   },
 ];

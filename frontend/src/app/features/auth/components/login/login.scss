@@ -117,6 +117,24 @@
             background: #ffffff;
           }
         }
+
+        &.invalid {
+          input {
+            background-color: rgba($error, 0.05);
+            border-color: rgba($error, 0.4);
+
+            &:focus {
+              border-color: $error;
+              box-shadow: 0 0 0 3px rgba($error, 0.1);
+              outline: none;
+            }
+          }
+        }
+      }
+
+      .error {
+        color: $error;
+        font-family: $font-roboto;
       }
     }
 

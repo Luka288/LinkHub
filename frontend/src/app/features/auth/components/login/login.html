@@ -16,18 +16,40 @@
   </aside>
 
   <aside id="auth-form">
-    <form>
-      <div class="input-wrap">
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+      <div
+        class="input-wrap"
+        [class.invalid]="
+          loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+        "
+      >
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" />
+        <input type="email" name="email" id="email" formControlName="email" />
+        @if (getError("email"); as error) {
+          <span class="error">{{ error }}</span>
+        }
       </div>
 
-      <div class="input-wrap">
+      <div
+        class="input-wrap"
+        [class.invalid]="
+          loginForm.get('password')?.invalid &&
+          loginForm.get('password')?.touched
+        "
+      >
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          formControlName="password"
+        />
+        @if (getError("password"); as error) {
+          <span class="error">{{ error }}</span>
+        }
       </div>
 
-      <button type="button" class="submit-btn">Log in</button>
+      <button type="submit" class="submit-btn">Log in</button>
 
       <p class="switch-text">
         Don't have an account? <a routerLink="/auth/register">Sign up free</a>
