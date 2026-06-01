@@ -1,3 +1,24 @@
 <section id="auth-section">
+  <aside id="top-container">
+    <div class="heading">
+      <div class="logo">Link<span>Hub</span></div>
+    </div>
+
+    <div class="options">
+      <button [routerLink]="['/auth/login']" [replaceUrl]="true">Log in</button>
+      <button [routerLink]="['/auth/register']" [replaceUrl]="true">
+        Sign up
+      </button>
+    </div>
+
+    <div class="greet">
+      <p>{{ routeData()["mode"] === "login" ? "Welcome" : "Sign up" }}</p>
+      <span
+        >{{ routeData()["mode"] === "login" ? "Log in" : "Create account" }} to
+        manage your links</span
+      >
+    </div>
+  </aside>
+
   <router-outlet />
 </section>

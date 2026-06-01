@@ -26,6 +26,7 @@ export const routes: Routes = [
         children: [
           {
             path: 'login',
+            data: { mode: 'login' },
             loadComponent: () =>
               import('./features/auth/components/login/login').then(
                 (m) => m.Login,
@@ -34,6 +35,7 @@ export const routes: Routes = [
 
           {
             path: 'register',
+            data: { mode: 'register' },
             loadComponent: () =>
               import('./features/auth/components/register/register').then(
                 (m) => m.Register,
@@ -61,5 +63,11 @@ export const routes: Routes = [
     children: [
       // dashboard routes (settings, profile)
     ],
+  },
+
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
   },
 ];

@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { BASE_URL } from '../consts/api.endpoint';
-import { AuthResponse, LoginPayload } from '../types/auth.type';
+import {
+  AuthResponse,
+  LoginPayload,
+  RegisterPayload,
+} from '../types/auth.type';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { UserResponse } from '../types/user.type';
 
@@ -22,11 +26,15 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.post(`${BASE_URL}/auth/logout`, {}).pipe(
-      tap((response) => {
-        this.currentUser.set(null);
-      }),
-    );
+    this.currentUser.set(null);
+
+    return this.http.post(`${BASE_URL}/auth/logout`, {});
+  }
+
+  register(payload: RegisterPayload): Observable<UserResponse> {
+    return this.http
+      .post<UserResponse>(`${BASE_URL}/auth/register`, payload)
+      .pipe(tap((response) => this.currentUser.set(response)));
   }
 
   fetchCurrentProfile(): Observable<UserResponse | null> {

@@ -1,0 +1,93 @@
+@use "../../../../../styles/mixins.scss" as *;
+@use "../../../../../styles/variables.scss" as *;
+
+:host {
+  width: 100%;
+}
+
+#registration-section {
+  @include flex(flex-start, flex-start, column, 16px);
+
+  form {
+    width: 100%;
+    @include flex(center, flex-start, column, 16px);
+
+    .input-wrap {
+      width: 100%;
+      @include flex(flex-start, flex-start, column, 6px);
+
+      label {
+        font-size: $font-sm;
+        font-family: $font-roboto;
+        color: $text-secondary;
+        font-weight: 500;
+      }
+
+      input {
+        width: 100%;
+        outline: none;
+        border-radius: $radius-md;
+        border: 0.5px solid $border;
+        box-sizing: border-box;
+        padding: 12px 14px;
+        font-size: $font-md;
+        font-family: $font-roboto;
+        color: $text-primary;
+        background: $bg-base;
+        transition: $transition;
+
+        &:focus {
+          border-color: $primary;
+          background: #ffffff;
+        }
+      }
+
+      &.invalid {
+        input {
+          background-color: rgba($error, 0.05);
+          border-color: rgba($error, 0.4);
+
+          &:focus {
+            border-color: $error;
+            box-shadow: 0 0 0 3px rgba($error, 0.1);
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .error {
+      color: $error;
+      font-family: $font-roboto;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: $primary;
+      color: #ffffff;
+      border: none;
+      border-radius: $radius-md;
+      font-size: $font-md;
+      font-family: $font-roboto;
+      font-weight: 500;
+      cursor: pointer;
+      transition: $transition;
+      margin-top: 8px;
+
+      &:hover {
+        background: $primary-hover;
+      }
+
+      &:active {
+        transform: scale(0.97);
+      }
+
+      &:disabled {
+        background: $primary-light;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
+  }
+}

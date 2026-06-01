@@ -19,7 +19,5 @@ export class PrivateLayout implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.authService.fetchCurrentProfile().subscribe(console.log);
-  }
+  ngOnInit(): void {}
 }

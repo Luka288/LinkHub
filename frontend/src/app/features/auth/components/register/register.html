@@ -1,1 +1,56 @@
-<p>register works!</p>
+<section id="registration-section">
+  <form [formGroup]="registerForm" (ngSubmit)="submit()">
+    <div
+      class="input-wrap"
+      [class.invalid]="
+        registerForm.get('username')?.invalid &&
+        registerForm.get('username')?.touched
+      "
+    >
+      <label for="username">Username</label>
+      <input
+        type="username"
+        name="username"
+        id="username"
+        formControlName="username"
+      />
+      @if (getError("username"); as error) {
+        <span class="error">{{ error }}</span>
+      }
+    </div>
+
+    <div
+      class="input-wrap"
+      [class.invalid]="
+        registerForm.get('email')?.invalid && registerForm.get('email')?.touched
+      "
+    >
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" formControlName="email" />
+      @if (getError("email"); as error) {
+        <span class="error">{{ error }}</span>
+      }
+    </div>
+
+    <div
+      class="input-wrap"
+      [class.invalid]="
+        registerForm.get('password')?.invalid &&
+        registerForm.get('password')?.touched
+      "
+    >
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        formControlName="password"
+      />
+      @if (getError("password"); as error) {
+        <span class="error">{{ error }}</span>
+      }
+    </div>
+
+    <button type="submit" class="submit-btn">Sign up</button>
+  </form>
+</section>

@@ -16,16 +16,19 @@ import {
 } from '@angular/common/http';
 import { credentialsInterceptor } from './core/interceptors/credentials-interceptor';
 import { AuthService } from './core/services/auth.service';
+import { authInterceptor } from './core/interceptors/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withFetch(), withInterceptors([credentialsInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([credentialsInterceptor, authInterceptor]),
+    ),
     provideAppInitializer(() => {
       const authService = inject(AuthService);
-
       return authService.fetchCurrentProfile();
     }),
   ],

@@ -9,79 +9,8 @@
   width: 100%;
   height: 100%;
 
-  #top-container {
-    width: 100%;
-
-    .heading {
-      text-align: center;
-
-      .logo {
-        color: $text-primary;
-        font-family: $font-roboto;
-        font-size: $font-xl;
-        font-weight: 600;
-
-        span {
-          color: $primary;
-        }
-      }
-    }
-
-    .options {
-      background-color: $bg-base;
-      box-sizing: border-box;
-      padding: 5px;
-      margin: 16px auto 0;
-      @include flex(center, center, row, 4px);
-      border-radius: $radius-md;
-
-      button {
-        flex: 1;
-        padding: 8px 0;
-        font-size: $font-sm;
-        font-family: $font-roboto;
-        font-weight: 500;
-        cursor: pointer;
-        transition: $transition;
-        border-radius: $radius-sm;
-        border: none;
-        background: $primary;
-        color: #ffffff;
-
-        &.active {
-          background: $primary-hover;
-          color: $text-primary;
-          border: 0.5px solid $border;
-        }
-
-        &:active {
-          transform: scale(0.97);
-        }
-      }
-    }
-
-    .greet {
-      margin-top: 24px;
-
-      p {
-        font-family: $font-roboto;
-        font-size: $font-lg;
-        font-weight: 500;
-        margin: 0 0 4px 0;
-      }
-
-      span {
-        font-family: $font-roboto;
-        font-weight: 400;
-        font-size: $font-sm;
-        color: $text-muted;
-      }
-    }
-  }
-
   #auth-form {
     width: 100%;
-    margin-top: 24px;
     @include flex(flex-start, flex-start, column, 16px);
 
     form {
@@ -173,6 +102,7 @@
       font-size: $font-sm;
       font-family: $font-roboto;
       color: $text-muted;
+      cursor: pointer;
 
       a {
         color: $primary;
