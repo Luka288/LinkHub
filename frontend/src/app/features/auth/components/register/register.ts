@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,10 +11,11 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { RegisterPayload } from '../../../../core/types/auth.type';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { Button } from '../../../../shared/ui/button/button';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, Button],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
@@ -22,6 +23,8 @@ export class Register {
   private readonly authService = inject(AuthService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
+
+  readonly loading = this.authService.loading;
 
   readonly registerForm = new FormGroup({
     username: new FormControl('', {

@@ -33,7 +33,10 @@
         }
       </div>
 
-      <button type="submit" class="submit-btn">Log in</button>
+      <!-- <button type="submit" class="submit-btn">Log in</button> -->
+      <app-button [variant]="'primary'" [loading]="loading()"
+        >Log in</app-button
+      >
 
       <p class="switch-text">
         Don't have an account? <a routerLink="/auth/register">Sign up free</a>

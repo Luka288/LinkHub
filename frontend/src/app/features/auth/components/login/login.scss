@@ -67,35 +67,6 @@
       }
     }
 
-    .submit-btn {
-      width: 100%;
-      padding: 12px;
-      background: $primary;
-      color: #ffffff;
-      border: none;
-      border-radius: $radius-md;
-      font-size: $font-md;
-      font-family: $font-roboto;
-      font-weight: 500;
-      cursor: pointer;
-      transition: $transition;
-      margin-top: 8px;
-
-      &:hover {
-        background: $primary-hover;
-      }
-
-      &:active {
-        transform: scale(0.97);
-      }
-
-      &:disabled {
-        background: $primary-light;
-        cursor: not-allowed;
-        transform: none;
-      }
-    }
-
     .switch-text {
       width: 100%;
       text-align: center;

@@ -51,6 +51,10 @@
       }
     </div>
 
-    <button type="submit" class="submit-btn">Sign up</button>
+    <!-- <button type="submit" class="submit-btn">Sign up</button> -->
+
+    <app-button variant="primary" (clicked)="submit()" [loading]="loading()"
+      >Sign up</app-button
+    >
   </form>
 </section>

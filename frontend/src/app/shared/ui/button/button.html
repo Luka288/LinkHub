@@ -1,0 +1,12 @@
+<button
+  class="base-btn"
+  [ngClass]="variant()"
+  [disabled]="disabled() || loading()"
+  (click)="clicked.emit()"
+>
+  @if (loading()) {
+    <span class="spinner"></span>
+  } @else {
+    <ng-content />
+  }
+</button>

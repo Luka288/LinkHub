@@ -12,10 +12,11 @@ import { getFieldError } from '../../../../core/utils/form-errors.util';
 import { AuthService } from '../../../../core/services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
+import { Button } from '../../../../shared/ui/button/button';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [FormsModule, ReactiveFormsModule, RouterLink, Button],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -28,6 +29,8 @@ export class Login {
     email: '',
     password: '',
   });
+
+  readonly loading = this.authService.loading;
 
   protected readonly loginForm = new FormGroup({
     email: new FormControl('lukagaxokidze28@gmail.com', {

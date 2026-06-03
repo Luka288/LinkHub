@@ -1,0 +1,57 @@
+@use "../../../../styles/mixins.scss" as *;
+@use "../../../../styles/variables.scss" as *;
+
+:host {
+  width: 100%;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.base-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: $radius-md;
+  font-size: $font-md;
+  font-family: $font-roboto;
+  font-weight: 500;
+  cursor: pointer;
+  transition: $transition;
+  margin-top: 8px;
+  outline: none;
+  border: none;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    background: $primary-light;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.base-btn.primary {
+  background: $primary;
+  color: white;
+
+  &:hover {
+    background: $primary-hover;
+  }
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
