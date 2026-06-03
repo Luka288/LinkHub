@@ -15,12 +15,30 @@ export const getProfile = async (
       return;
     }
 
-    const result = await pool.query(
-      "SELECT id, username, email, bio, avatar_url FROM users WHERE id = $1",
-      [userId],
-    );
+    const [userResult, linksResult] = await Promise.all([
+      pool.query(
+        `
+        SELECT id, username, email, bio, avatar_url
+        FROM users
+        WHERE id = $1
+        `,
+        [userId],
+      ),
+      pool.query(
+        `
+        SELECT *
+        FROM links
+        WHERE user_id = $1
+        ORDER BY id
+        `,
+        [userId],
+      ),
+    ]);
 
-    response.json(result.rows[0]);
+    response.json({
+      ...userResult.rows[0],
+      links: linksResult.rows,
+    });
   } catch (error) {
     console.error(error);
     return response.status(500).json({ error: "Server error." });

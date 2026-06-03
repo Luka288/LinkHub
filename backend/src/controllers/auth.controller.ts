@@ -8,13 +8,23 @@ export const register = async (request: Request, response: Response) => {
 
   try {
     const existingUser = await pool.query(
-      "SELECT id FROM users WHERE email = $1 OR username = $2",
+      "SELECT id, username, email FROM users WHERE email = $1 OR username = $2",
       [email, username],
     );
 
+    // username, email check
     if (existingUser.rows.length > 0) {
-      response.status(400).json({ error: "Email address is already taken" });
-      return;
+      const user = existingUser.rows[0];
+
+      if (user.email === email) {
+        response.status(400).json({ error: "Email already taken" });
+        return;
+      }
+
+      if (user.username === username) {
+        response.status(400).json({ error: "Username already taken" });
+        return;
+      }
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
