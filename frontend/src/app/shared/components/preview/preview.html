@@ -1,0 +1,19 @@
+<!-- only visible on the links route -->
+<aside id="preview">
+  <div class="phone-frame">
+    <div class="phone-screen">
+      <div class="user-mini-card">
+        <div class="img-placeholder"></div>
+
+        <p>{{ data()?.username }}</p>
+        <span>{{ data()?.bio }}</span>
+      </div>
+
+      <div class="urls">
+        @for (URL of data()?.links; track $index) {
+          <span>{{ URL.title }}</span>
+        }
+      </div>
+    </div>
+  </div>
+</aside>

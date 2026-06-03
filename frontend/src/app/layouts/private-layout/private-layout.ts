@@ -1,15 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { SidePanel } from '../../shared/components/side-panel/side-panel';
+import { Preview } from '../../shared/components/preview/preview';
 
 @Component({
   selector: 'app-private-layout',
-  imports: [],
+  imports: [RouterOutlet, SidePanel, Preview],
   templateUrl: './private-layout.html',
   styleUrl: './private-layout.scss',
 })
 export class PrivateLayout implements OnInit {
-  private readonly authService = inject(AuthService);
+  readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   logout() {

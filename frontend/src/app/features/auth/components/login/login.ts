@@ -30,12 +30,12 @@ export class Login {
   });
 
   protected readonly loginForm = new FormGroup({
-    email: new FormControl('test12@test.com', {
+    email: new FormControl('lukagaxokidze28@gmail.com', {
       validators: [Validators.email, Validators.required],
       nonNullable: true,
     }),
 
-    password: new FormControl('12345678', {
+    password: new FormControl('niniko787', {
       validators: [
         Validators.minLength(8),
         Validators.maxLength(16),

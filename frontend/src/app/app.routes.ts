@@ -61,7 +61,26 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
     children: [
-      // dashboard routes (settings, profile)
+      {
+        path: 'links',
+        title: 'LinkHub | Links',
+        loadComponent: () =>
+          import('./features/links/links').then((m) => m.Links),
+      },
+
+      {
+        path: 'appearance',
+        title: 'LinkHub | Appearance',
+        loadComponent: () =>
+          import('./features/appearance/appearance').then((m) => m.Appearance),
+      },
+
+      // redirect to HOME page of protected routes (links)
+      {
+        path: '',
+        redirectTo: 'links',
+        pathMatch: 'full',
+      },
     ],
   },
 

@@ -1,0 +1,29 @@
+<div id="panel">
+  <div class="logo" routerLink="">Link<span>Hub</span></div>
+
+  <ul>
+    <li
+      routerLink="/dashboard/links"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a> Links </a>
+    </li>
+
+    <li
+      routerLink="/dashboard/appearance"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a>Page appearance</a>
+    </li>
+
+    <li>
+      <a>Settings</a>
+    </li>
+
+    <li>
+      <a>Preview</a>
+    </li>
+  </ul>
+</div>

@@ -1,1 +1,17 @@
-<button (click)="logout()">logout</button>
+<!-- admin layout dashboard where user manages its own links, page design -->
+<section id="private-layout">
+  <aside id="sidebar">
+    <app-side-panel />
+  </aside>
+
+  <div id="content">
+    <router-outlet />
+  </div>
+
+  <!-- only visible on the links route -->
+  <aside id="preview">
+    <app-preview [data]="authService.currentUser()" />
+  </aside>
+
+  <button (click)="logout()">logout</button>
+</section>

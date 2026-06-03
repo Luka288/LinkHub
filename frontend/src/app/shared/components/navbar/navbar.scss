@@ -9,10 +9,12 @@ nav {
 
   #logo-side {
     .logo {
+      width: fit-content;
       color: #0f0f0f;
       font-family: $font-roboto;
       font-size: $font-3xl;
       font-weight: 600;
+      cursor: pointer;
 
       span {
         color: #6c63ff;

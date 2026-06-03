@@ -1,0 +1,13 @@
+@use "../../../styles/variables.scss" as *;
+@use "../../../styles/mixins.scss" as *;
+
+#private-layout {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr 320px;
+  gap: 16px;
+  // padding: 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
