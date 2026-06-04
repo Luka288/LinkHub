@@ -8,7 +8,7 @@ export const authMiddleware = (
   next: NextFunction,
 ) => {
   try {
-    const token = request.cookies?.token;
+    const token = request.headers.authorization?.split(" ")[1];
 
     if (!token) {
       response.status(401).json({ error: "No token provided" });
@@ -18,7 +18,7 @@ export const authMiddleware = (
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
       userId: number;
     };
-    (request as any).user = decoded;
+    request.user = decoded;
     next();
   } catch {
     response.status(401).json({ error: "Unauthorized" });
