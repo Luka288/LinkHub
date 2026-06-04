@@ -17,6 +17,7 @@ import {
 import { credentialsInterceptor } from './core/interceptors/credentials-interceptor';
 import { AuthService } from './core/services/auth.service';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,11 +26,16 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
       withFetch(),
-      withInterceptors([credentialsInterceptor, authInterceptor]),
+      withInterceptors([
+        credentialsInterceptor,
+        authInterceptor,
+        ErrorInterceptor,
+      ]),
     ),
     provideAppInitializer(() => {
       const authService = inject(AuthService);
-      return authService.fetchCurrentProfile();
+
+      return authService.initialize();
     }),
   ],
 };

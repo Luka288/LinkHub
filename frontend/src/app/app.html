@@ -1,1 +1,6 @@
-<router-outlet />
+@if (alert()) {
+  <app-alert />
+}
+<main>
+  <router-outlet />
+</main>

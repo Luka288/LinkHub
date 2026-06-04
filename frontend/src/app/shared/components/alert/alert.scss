@@ -1,0 +1,110 @@
+@use "../../../../styles/variables.scss" as *;
+@use "../../../../styles/mixins.scss" as *;
+
+:host {
+  display: block;
+  position: fixed;
+  top: $spacing-lg;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 100%;
+  max-width: 400px;
+  padding: 0 $spacing-md;
+}
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px $spacing-md;
+  border-radius: $radius-md;
+  font-size: $font-sm;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  transition: $transition;
+  font-family: $font-roboto;
+
+  .icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .body {
+    flex: 1;
+  }
+
+  .title {
+    font-weight: 500;
+    font-size: $font-sm;
+    margin: 0 0 2px;
+  }
+
+  .text {
+    margin: 0;
+    font-size: 0.8125rem;
+  }
+
+  .close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    opacity: 0.5;
+    flex-shrink: 0;
+    transition: $transition;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &.info {
+    background: $alert-info-bg;
+    border-color: $alert-info-border;
+    color: $alert-info-text;
+    .text {
+      color: $alert-info-subtext;
+    }
+    .close {
+      color: $alert-info-text;
+    }
+  }
+
+  &.success {
+    background: $alert-success-bg;
+    border-color: $alert-success-border;
+    color: $alert-success-text;
+    .text {
+      color: $alert-success-subtext;
+    }
+    .close {
+      color: $alert-success-text;
+    }
+  }
+
+  &.warning {
+    background: $alert-warning-bg;
+    border-color: $alert-warning-border;
+    color: $alert-warning-text;
+    .text {
+      color: $alert-warning-subtext;
+    }
+    .close {
+      color: $alert-warning-text;
+    }
+  }
+
+  &.error {
+    background: $alert-error-bg;
+    border-color: $alert-error-border;
+    color: $alert-error-text;
+    .text {
+      color: $alert-error-subtext;
+    }
+    .close {
+      color: $alert-error-text;
+    }
+  }
+}

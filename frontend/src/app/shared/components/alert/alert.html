@@ -1,0 +1,10 @@
+<div class="alert" [ngClass]="variant()">
+  <i class="icon" [ngClass]="iconClass()"></i>
+  <div class="body">
+    <p class="title">{{ alert()?.title }}</p>
+    <p class="text">{{ alert()?.text }}</p>
+  </div>
+  <button class="close" (click)="alertService.hideAlert()">
+    <i class="ti ti-x"></i>
+  </button>
+</div>

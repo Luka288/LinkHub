@@ -17,19 +17,46 @@ export class AuthService {
 
   readonly currentUser = signal<UserResponse | null>(null);
 
+  readonly accessToken = signal<string | null>(null);
+
   private readonly _loading = signal<boolean>(false);
   readonly loading = this._loading.asReadonly();
+
+  getAccessToken() {
+    return this.accessToken();
+  }
+
+  initialize() {
+    return this.http
+      .post<{
+        access_token: string;
+        user: UserResponse;
+      }>(`${BASE_URL}/auth/refresh`, {})
+      .pipe(
+        tap((result) => {
+          this.accessToken.set(result.access_token);
+          this.currentUser.set(result.user);
+        }),
+        catchError(() => of(null)),
+      );
+  }
 
   login(payLoad: LoginPayload) {
     this._loading.set(true);
 
-    return this.http.post<AuthResponse>(`${BASE_URL}/auth/login`, payLoad).pipe(
-      tap(({ user }) => {
-        this.currentUser.set(user);
-      }),
+    return this.http
+      .post<{
+        access_token: string;
+        user: UserResponse;
+      }>(`${BASE_URL}/auth/login`, payLoad)
+      .pipe(
+        tap(({ access_token, user }) => {
+          this.accessToken.set(access_token);
+          this.currentUser.set(user);
+        }),
 
-      finalize(() => this._loading.set(false)),
-    );
+        finalize(() => this._loading.set(false)),
+      );
   }
 
   register(payload: RegisterPayload): Observable<UserResponse> {

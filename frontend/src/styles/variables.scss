@@ -48,3 +48,23 @@ $shadow-primary: 0 4px 20px rgba(108, 99, 255, 0.25);
 
 $transition: all 0.2s ease;
 $transition-slow: all 0.4s ease;
+
+$alert-info-bg: rgba($primary, 0.08);
+$alert-success-bg: rgba($success, 0.08);
+$alert-warning-bg: rgba($warning, 0.1);
+$alert-error-bg: rgba($error, 0.06);
+
+$alert-info-border: rgba($primary, 0.3);
+$alert-success-border: rgba($success, 0.35);
+$alert-warning-border: rgba($warning, 0.4);
+$alert-error-border: rgba($error, 0.3);
+
+$alert-info-text: #3a35a0;
+$alert-success-text: #166534;
+$alert-warning-text: #92400e;
+$alert-error-text: #991b1b;
+
+$alert-info-subtext: #5a55b8;
+$alert-success-subtext: #15803d;
+$alert-warning-subtext: #b45309;
+$alert-error-subtext: #b91c1c;
