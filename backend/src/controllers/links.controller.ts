@@ -42,7 +42,7 @@ export const createLink = async (
       [userId, title, url],
     );
 
-    response.status(201).json(result.rows);
+    response.status(201).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     return response.status(500).json({ error: "Server error" });
