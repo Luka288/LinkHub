@@ -1,0 +1,58 @@
+<div class="modal">
+  <div class="modal-header">
+    <h2>{{ isEdit() ? "Create link" : "Edit link" }}</h2>
+    <button (click)="close()" class="btn-close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="field">
+      <label>Title</label>
+      <input
+        formControlName="title"
+        type="text"
+        placeholder="e.g. Instagram"
+        [class.invalid]="
+          form.get('title')?.invalid && form.get('title')?.touched
+        "
+      />
+      @if (
+        form.controls.title.touched && form.controls.title.hasError("required")
+      ) {
+        <span class="error">Title is required</span>
+      }
+    </div>
+
+    <div class="field">
+      <label>Url</label>
+      <input
+        formControlName="url"
+        type="text"
+        placeholder="e.g. Instagram"
+        [class.invalid]="form.get('url')?.invalid && form.get('url')?.touched"
+      />
+      @if (
+        form.controls.url.touched && form.controls.url.hasError("required")
+      ) {
+        <span class="error">Url is required</span>
+      }
+
+      @if (form.controls.url.touched && form.controls.url.hasError("pattern")) {
+        <span class="error">Must start with http:// or https://</span>
+      }
+    </div>
+  </form>
+
+  <div class="modal-footer">
+    <button type="button" class="btn-cancel" (click)="close()">Cancel</button>
+    <button
+      type="submit"
+      class="btn-submit"
+      [disabled]="form.invalid"
+      (click)="submit()"
+    >
+      {{ isEdit() ? "Save changes" : "Add link" }}
+    </button>
+  </div>
+</div>

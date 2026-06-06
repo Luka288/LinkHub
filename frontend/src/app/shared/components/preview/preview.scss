@@ -18,10 +18,8 @@
     position: relative;
     flex-shrink: 0;
 
-    // set dynamically based on user's theme preference (see page-appearance settings)
     background: $active-white;
 
-    // notch
     &::before {
       content: "";
       position: absolute;

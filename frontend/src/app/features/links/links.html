@@ -1,1 +1,13 @@
-<section id="links-section">URL UI HERE</section>
+<section id="links-section">
+  <div id="links-main">
+    <app-user-card [userData]="user()" />
+
+    <div class="action">
+      <button (click)="openCreate()">Add Link</button>
+    </div>
+  </div>
+
+  <aside id="preview">
+    <app-preview [data]="user()" />
+  </aside>
+</section>

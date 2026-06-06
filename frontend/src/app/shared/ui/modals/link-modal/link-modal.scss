@@ -1,0 +1,147 @@
+@use "../../../../../styles/mixins.scss" as *;
+@use "../../../../../styles/variables.scss" as *;
+
+.modal {
+  width: 460px;
+  background: $bg-surface;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  box-sizing: border-box;
+  box-shadow: $shadow-lg;
+
+  .modal-header {
+    @include flex(space-between, center, row);
+    margin-bottom: $spacing-xl;
+
+    h2 {
+      font-size: $font-md;
+      font-weight: 600;
+      color: $text-primary;
+      font-family: $font-roboto;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-close {
+      width: 30px;
+      height: 30px;
+      border-radius: $radius-sm;
+      border: none;
+      background: transparent;
+      color: $text-muted;
+      cursor: pointer;
+      transition: $transition;
+      @include flex-center();
+      font-size: $font-sm;
+
+      &:hover {
+        background: $bg-hover;
+        color: $text-primary;
+      }
+    }
+  }
+
+  form {
+    @include flex(flex-start, flex-start, column, $spacing-md);
+
+    .field {
+      width: 100%;
+      @include flex(flex-start, flex-start, column, $spacing-xs);
+
+      label {
+        font-size: 0.75rem;
+        font-family: $font-roboto;
+        color: $text-muted;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      input {
+        width: 100%;
+        outline: none;
+        border-radius: $radius-sm;
+        border: 1px solid $border;
+        box-sizing: border-box;
+        padding: 10px $spacing-md;
+        font-size: $font-sm;
+        font-family: $font-roboto;
+        color: $text-primary;
+        background: $bg-surface;
+        transition: $transition;
+
+        &::placeholder {
+          color: $text-muted;
+        }
+
+        &:focus {
+          border-color: $primary;
+          box-shadow: 0 0 0 3px $primary-light;
+        }
+
+        &.invalid {
+          border-color: rgba($error, 0.5);
+          background: rgba($error, 0.02);
+
+          &:focus {
+            border-color: $error;
+            box-shadow: 0 0 0 3px rgba($error, 0.08);
+          }
+        }
+      }
+
+      .error {
+        font-size: 0.75rem;
+        color: $error;
+        font-family: $font-roboto;
+      }
+    }
+  }
+
+  .modal-footer {
+    @include flex(flex-end, center, row, $spacing-sm);
+    padding-top: $spacing-lg;
+    border-top: 1px solid $border;
+    margin-top: $spacing-xl;
+
+    .btn-cancel {
+      padding: 9px $spacing-md;
+      border-radius: $radius-sm;
+      border: 1px solid $border;
+      background: transparent;
+      color: $text-secondary;
+      font-size: $font-sm;
+      font-family: $font-roboto;
+      cursor: pointer;
+      transition: $transition;
+
+      &:hover {
+        background: $bg-hover;
+        color: $text-primary;
+      }
+    }
+
+    .btn-submit {
+      padding: 9px $spacing-md;
+      border-radius: $radius-sm;
+      border: none;
+      background: $primary;
+      color: #fff;
+      font-size: $font-sm;
+      font-weight: 600;
+      font-family: $font-roboto;
+      cursor: pointer;
+      transition: $transition;
+
+      &:hover:not(:disabled) {
+        background: $primary-hover;
+        box-shadow: $shadow-primary;
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

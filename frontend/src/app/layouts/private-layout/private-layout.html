@@ -7,11 +7,4 @@
   <div id="content">
     <router-outlet />
   </div>
-
-  <!-- only visible on the links route -->
-  <aside id="preview">
-    <app-preview [data]="authService.currentUser()" />
-  </aside>
-
-  <button (click)="logout()">logout</button>
 </section>

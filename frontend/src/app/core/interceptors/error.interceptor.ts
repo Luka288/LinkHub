@@ -9,9 +9,8 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       const message = error.error?.error ?? 'Something went wrong';
-      alert.displayAlert('Error', message, AlertVariant.Error);
 
-      console.error(error);
+      alert.displayAlert('Error', message, AlertVariant.Error);
 
       return throwError(() => error);
     }),

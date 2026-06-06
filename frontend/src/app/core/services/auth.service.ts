@@ -59,16 +59,20 @@ export class AuthService {
       );
   }
 
-  register(payload: RegisterPayload): Observable<UserResponse> {
+  register(payload: RegisterPayload) {
     this._loading.set(true);
 
     return this.http
-      .post<UserResponse>(`${BASE_URL}/auth/register`, payload)
+      .post<{
+        access_token: string;
+        user: UserResponse;
+      }>(`${BASE_URL}/auth/register`, payload)
       .pipe(
-        tap(
-          (response) => this.currentUser.set(response),
-          finalize(() => this._loading.set(false)),
-        ),
+        tap(({ access_token, user }) => {
+          this.accessToken.set(access_token);
+          this.currentUser.set(user);
+        }),
+        finalize(() => this._loading.set(false)),
       );
   }
 

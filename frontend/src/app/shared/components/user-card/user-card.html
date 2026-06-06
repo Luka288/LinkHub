@@ -1,0 +1,27 @@
+<div class="user-card">
+  <div class="avatar">
+    @if (userData()?.avatar_url) {
+      <img [src]="userData()?.avatar_url" [alt]="userData()?.username" />
+    }
+    <ng-template #placeholder>
+      <div class="avatar-placeholder">
+        <i class="fa-regular fa-user"></i>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="user-info">
+    <span class="username">@{{ userData()?.username }}</span>
+    <span class="bio">{{ userData()?.bio }}</span>
+
+    <div class="socials">
+      <button class="social-btn"><i class="fa-brands fa-instagram"></i></button>
+      <button class="social-btn"><i class="fa-brands fa-tiktok"></i></button>
+      <button class="social-btn"><i class="fa-brands fa-whatsapp"></i></button>
+      <button class="social-btn"><i class="fa-brands fa-snapchat"></i></button>
+      <button class="social-btn add-btn">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+  </div>
+</div>
