@@ -21,14 +21,6 @@ const globalLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 20,
-  message: { error: "Too many attempts, please try again later." },
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-
 app.use(cookieParser());
 app.use(
   cors({
@@ -40,7 +32,6 @@ app.use(
 app.use(express.json());
 
 app.use(globalLimiter);
-app.use("/auth", authLimiter);
 
 app.use("/auth", authRoute);
 app.use("/links", linksRoute);

@@ -3,15 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import pool from "../config/db";
 
-/*
-  TODO: Implement silent refresh (dual token strategy)
-  - login returns access_token (1h, memory) + refresh_token (7d, httpOnly cookie)
-  - on app init POST /auth/refresh instead of GET /profile
-    ├── cookie valid → restore session silently ✅
-    └── no cookie   → guest, no 401 alert ✅
-  - on 401 → interceptor auto-refreshes → retries request
-*/
-
 const generateAccessToken = (userId: number) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET as string, {
     expiresIn: "1h",
