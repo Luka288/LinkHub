@@ -10,10 +10,11 @@ import {
   LinkModalData,
 } from '../../shared/ui/modals/link-modal/link-modal';
 import { filter, switchMap } from 'rxjs';
+import { UrlCard } from '../../shared/components/url-card/url-card';
 
 @Component({
   selector: 'app-links',
-  imports: [UserCard, Preview],
+  imports: [UserCard, Preview, UrlCard],
   templateUrl: './links.html',
   styleUrl: './links.scss',
 })

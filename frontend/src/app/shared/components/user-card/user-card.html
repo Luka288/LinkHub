@@ -2,26 +2,39 @@
   <div class="avatar">
     @if (userData()?.avatar_url) {
       <img [src]="userData()?.avatar_url" [alt]="userData()?.username" />
-    }
-    <ng-template #placeholder>
+    } @else {
       <div class="avatar-placeholder">
-        <i class="fa-regular fa-user"></i>
+        {{ userData()?.username?.charAt(0)?.toUpperCase() || "?" }}
       </div>
-    </ng-template>
+    }
   </div>
 
   <div class="user-info">
-    <span class="username">@{{ userData()?.username }}</span>
-    <span class="bio">{{ userData()?.bio }}</span>
+    <div class="user-names">
+      <span class="username">{{ userData()?.username }}</span>
+      <span class="handle">&#64;{{ userData()?.username?.toLowerCase() }}</span>
+    </div>
 
-    <div class="socials">
-      <button class="social-btn"><i class="fa-brands fa-instagram"></i></button>
-      <button class="social-btn"><i class="fa-brands fa-tiktok"></i></button>
-      <button class="social-btn"><i class="fa-brands fa-whatsapp"></i></button>
-      <button class="social-btn"><i class="fa-brands fa-snapchat"></i></button>
-      <button class="social-btn add-btn">
+    @if (userData()?.bio) {
+      <p class="bio">{{ userData()?.bio }}</p>
+    }
+
+    <!-- <div class="socials">
+      <button class="social-btn" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </button>
+      <button class="social-btn" aria-label="TikTok">
+        <i class="fa-brands fa-tiktok"></i>
+      </button>
+      <button class="social-btn" aria-label="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+      </button>
+      <button class="social-btn" aria-label="Snapchat">
+        <i class="fa-brands fa-snapchat"></i>
+      </button>
+      <button class="social-btn add-btn" aria-label="Add social">
         <i class="fa-solid fa-plus"></i>
       </button>
-    </div>
+    </div> -->
   </div>
 </div>

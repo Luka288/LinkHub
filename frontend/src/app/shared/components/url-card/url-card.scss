@@ -1,0 +1,31 @@
+@use "../../../../styles/variables.scss" as *;
+@use "../../../../styles/mixins.scss" as *;
+
+.url-card {
+  border-radius: $radius-md;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid $border;
+  font-family: $font-inter;
+  @include flex($align-items: center, $justify-content: space-between);
+
+  .url-info {
+    h3 {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    span {
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+
+  .card-actions {
+    ul {
+      li {
+        list-style: none;
+      }
+    }
+  }
+}

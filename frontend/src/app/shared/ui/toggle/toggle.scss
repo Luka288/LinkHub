@@ -1,0 +1,31 @@
+@use "../../../../styles/mixins.scss" as *;
+@use "../../../../styles/variables.scss" as *;
+
+.toggle {
+  width: 36px;
+  height: 20px;
+  border-radius: $radius-full;
+  background: $border;
+  padding: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+  @include flex($align-items: center, $justify-content: flex-start);
+
+  .knob {
+    width: 16px;
+    height: 16px;
+    border-radius: $radius-full;
+    background: #fff;
+    transition: transform 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0; 
+  }
+
+  &.on {
+    background: $primary;
+    .knob {
+      transform: translateX(16px);
+    }
+  }
+}

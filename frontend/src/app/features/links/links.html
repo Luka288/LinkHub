@@ -1,9 +1,20 @@
 <section id="links-section">
   <div id="links-main">
-    <app-user-card [userData]="user()" />
+    <div class="user">
+      <app-user-card [userData]="user()" />
 
-    <div class="action">
-      <button (click)="openCreate()">Add Link</button>
+      <div class="action">
+        <button class="btn-dashed" (click)="openCreate()">
+          <i class="fa-solid fa-plus"></i>
+          Add Link
+        </button>
+      </div>
+    </div>
+
+    <div class="user-urls">
+      @for (link of user()?.links; track $index) {
+        <app-url-card [urlData]="link" />
+      }
     </div>
   </div>
 

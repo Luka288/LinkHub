@@ -4,10 +4,10 @@ export interface UserResponse {
   email: string;
   id: number;
   username: string;
-  links: UserLinks[];
+  links: UserLink[];
 }
 
-export interface UserLinks {
+export interface UserLink {
   id: number;
   user_id: number;
   title: string;

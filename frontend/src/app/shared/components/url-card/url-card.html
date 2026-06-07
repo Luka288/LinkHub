@@ -1,0 +1,17 @@
+<div class="url-card">
+  <div class="url-info">
+    <h3>{{ urlData()?.title }}</h3>
+    <span>{{ urlData()?.url }}</span>
+  </div>
+
+  <div class="card-actions">
+    <ul>
+      <li>
+        <app-toggle
+          [isActive]="urlData()!.is_active"
+          (toggled)="toggleChanged.emit($event)"
+        />
+      </li>
+    </ul>
+  </div>
+</div>

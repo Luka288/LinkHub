@@ -1,6 +1,9 @@
 $primary: #6c63ff;
 $primary-hover: #5a52d5;
 $primary-light: rgba(108, 99, 255, 0.1);
+$dark-purple: #222040;
+$purple-hover: #2d2b50;
+$hover-red: #22131e;
 
 $bg-base: #f8f7ff;
 $bg-surface: #ffffff;
@@ -12,6 +15,9 @@ $active-white: #e6e5e3;
 $text-primary: #0f0f0f;
 $text-secondary: #555555;
 $text-muted: #999999;
+$text-active: #4f46e5;
+
+$content-bg: #ffffff;
 
 $border: #e8e6ff;
 $border-focus: #6c63ff;
@@ -34,6 +40,9 @@ $spacing-2xl: 48px;
 $spacing-3xl: 64px;
 
 $font-roboto: "Roboto", sans-serif;
+$font-montserrat: "Montserrat", sans-serif;
+$font-inter: "Inter", sans-serif;
+
 $font-sm: 0.875rem;
 $font-md: 1rem;
 $font-lg: 1.25rem;
@@ -68,3 +77,8 @@ $alert-info-subtext: #5a55b8;
 $alert-success-subtext: #15803d;
 $alert-warning-subtext: #b45309;
 $alert-error-subtext: #b91c1c;
+
+$sidebar-bg: #f5f3ff;
+$sidebar-hover: #ede9fe;
+$sidebar-active-bg: #ede9fe;
+$sidebar-border: rgba(108, 99, 255, 0.12);

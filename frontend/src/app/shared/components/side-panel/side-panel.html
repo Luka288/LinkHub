@@ -1,33 +1,42 @@
 <div id="panel">
   <div class="logo" routerLink="">Link<span>Hub</span></div>
 
-  <ul>
-    <li
-      routerLink="/dashboard/links"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <a> Links </a>
-    </li>
+  <nav>
+    <ul>
+      <li
+        routerLink="/dashboard/links"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="fa-solid fa-link"></i>
+        <a>Links</a>
+      </li>
 
-    <li
-      routerLink="/dashboard/appearance"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <a>Page appearance</a>
-    </li>
+      <li
+        routerLink="/dashboard/appearance"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <i class="fa-solid fa-palette"></i>
+        <a>Appearance</a>
+      </li>
 
-    <li>
-      <a>Settings</a>
-    </li>
+      <li>
+        <i class="fa-solid fa-gear"></i>
+        <a>Settings</a>
+      </li>
 
-    <li>
-      <a>Preview</a>
-    </li>
+      <li>
+        <i class="fa-brands fa-phabricator"></i>
+        <a>Preview</a>
+      </li>
+    </ul>
+  </nav>
 
-    <li>
-      <a (click)="logout()">Logout</a>
-    </li>
-  </ul>
+  <div class="panel-footer">
+    <button class="logout-btn" (click)="logout()">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      Logout
+    </button>
+  </div>
 </div>

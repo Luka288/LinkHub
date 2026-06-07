@@ -9,8 +9,44 @@
   box-sizing: border-box;
 
   #links-main {
+    width: 100%;
     @include flex($flex-direction: column, $gap: $spacing-lg);
     max-width: 640px;
+    margin: 0 auto;
+
+    .user {
+      @include flex($flex-direction: column, $gap: $spacing-md);
+
+      .action {
+        width: 100%;
+
+        .btn-dashed {
+          width: 100%;
+          padding: 11px;
+          @include flex-center($gap: 7px);
+          background: transparent;
+          border: 1.5px dashed $border;
+          border-radius: $radius-md;
+          font-family: $font-roboto;
+          font-size: $font-sm;
+          color: $text-muted;
+          cursor: pointer;
+          transition: $transition;
+
+          &:hover {
+            border-color: $primary;
+            border-style: solid;
+            color: $primary;
+            background: $primary-light;
+          }
+        }
+      }
+    }
+
+    .user-urls {
+      width: 100%;
+      @include flex($flex-direction: column, $gap: 25px);
+    }
   }
 
   #preview {

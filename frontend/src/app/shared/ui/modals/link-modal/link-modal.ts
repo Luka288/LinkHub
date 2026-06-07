@@ -1,6 +1,6 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { Component, computed, inject } from '@angular/core';
-import { UserLinks } from '../../../../core/types/user.type';
+import { UserLink } from '../../../../core/types/user.type';
 import {
   FormControl,
   FormGroup,
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 
 export interface LinkModalData {
   mode: 'create' | 'edit';
-  link?: UserLinks;
+  link?: UserLink;
 }
 
 @Component({

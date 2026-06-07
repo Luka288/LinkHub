@@ -1,19 +1,23 @@
-<!-- only visible on the links route -->
 <aside id="preview">
+  <p class="preview-label">Live preview</p>
   <div class="phone-frame">
     <div class="phone-screen">
       <div class="user-mini-card">
-        <div class="img-placeholder"></div>
-
-        <p>{{ data()?.username }}</p>
-        <span>{{ data()?.bio }}</span>
+        <div class="avatar">
+          {{ data()?.username?.charAt(0)?.toUpperCase() }}
+        </div>
+        <p class="username">{{ data()?.username }}</p>
+        <span class="bio">{{ data()?.bio }}</span>
       </div>
 
       <div class="urls">
-        @for (URL of data()?.links; track $index) {
-          <span>{{ URL.title }}</span>
+        @for (url of data()?.links; track $index) {
+          <span>{{ url.title }}</span>
         }
       </div>
+
+      <div class="phone-divider"></div>
+      <p class="phone-footer">made with <span>LinkHub</span></p>
     </div>
   </div>
 </aside>
