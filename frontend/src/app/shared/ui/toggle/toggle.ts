@@ -26,8 +26,7 @@ export class Toggle {
   }
 
   toggle() {
-    const next = !this.active();
-    this.active.set(next);
-    this.toggled.emit(next);
+    this.active.set(!this.active());
+    this.toggled.emit(this.active());
   }
 }

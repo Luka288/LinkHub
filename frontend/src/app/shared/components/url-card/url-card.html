@@ -9,7 +9,7 @@
       <li>
         <app-toggle
           [isActive]="urlData()!.is_active"
-          (toggled)="toggleChanged.emit($event)"
+          (toggled)="onToggle($event)"
         />
       </li>
     </ul>

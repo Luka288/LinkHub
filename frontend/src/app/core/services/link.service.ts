@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BASE_URL } from '../consts/api.endpoint';
-import { CreateLinkPayload } from '../types/link.types';
+import { CreateLinkPayload, ToggleLinkPayload } from '../types/link.types';
 import { Observable, tap } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UserLink } from '../types/user.type';
@@ -20,6 +20,23 @@ export class LinkService {
           if (!user) return null;
 
           return { ...user, links: [...user.links, link] };
+        });
+      }),
+    );
+  }
+
+  updateUrl(payload: ToggleLinkPayload) {
+    return this.http.patch<UserLink>(`${BASE_URL}/links/toggle`, payload).pipe(
+      tap((updatedLink: UserLink) => {
+        this.authService.currentUser.update((user) => {
+          if (!user) return user;
+
+          return {
+            ...user,
+            links: user.links.map((link) =>
+              link.id === updatedLink.id ? updatedLink : link,
+            ),
+          };
         });
       }),
     );
