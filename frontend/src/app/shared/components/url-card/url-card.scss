@@ -23,8 +23,41 @@
 
   .card-actions {
     ul {
+      @include flex($flex-direction: row, $gap: 10px);
+
       li {
+        width: fit-content;
         list-style: none;
+
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 12px;
+          font-family: $font-inter;
+          font-size: 12px;
+          font-weight: 500;
+          border: 1px solid $border;
+          border-radius: $radius-sm;
+          cursor: pointer;
+          transition: $transition;
+          background-color: $primary;
+          color: $off-white;
+
+          i {
+            font-size: 12px;
+          }
+
+          &:hover {
+            color: $text-primary;
+            background: $bg-hover;
+            border-color: $primary;
+          }
+
+          &:active {
+            background: $active-white;
+          }
+        }
       }
     }
   }

@@ -36,7 +36,7 @@ export class LinkModal {
     ]),
   });
 
-  readonly isEdit = computed(() => this.data.mode === 'create');
+  readonly isEdit = computed(() => this.data.mode === 'edit');
 
   submit(): void {
     if (this.form.invalid) {
@@ -44,7 +44,11 @@ export class LinkModal {
       return;
     }
 
-    this.dialogRef.close(this.form.value);
+    this.dialogRef.close({
+      ...this.form.value,
+      id: this.data.link?.id,
+      userId: this.data.link?.user_id,
+    });
   }
 
   close(): void {

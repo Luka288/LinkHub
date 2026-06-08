@@ -101,15 +101,25 @@
       transition: $transition;
       box-sizing: border-box;
 
-      &:first-child {
-        background: $primary;
-        color: #fff;
-        border-color: transparent;
-      }
+      // &:first-child {
+      //   background: $primary;
+      //   color: #fff;
+      //   border-color: transparent;
+      // }
 
       &:hover {
         box-shadow: $shadow-sm;
         transform: translateY(-1px);
+      }
+
+      &.disabled {
+        background-color: #e0e0e0;
+        color: black;
+        border-color: transparent;
+        cursor: not-allowed;
+        opacity: 0.6;
+        pointer-events: none;
+        box-shadow: none;
       }
     }
   }

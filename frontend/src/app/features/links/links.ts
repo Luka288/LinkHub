@@ -1,16 +1,27 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { UserCard } from '../../shared/components/user-card/user-card';
 import { Preview } from '../../shared/components/preview/preview';
 import { LinkService } from '../../core/services/link.service';
-import { CreateLinkPayload } from '../../core/types/link.types';
+import {
+  CreateLinkPayload,
+  UpdateLinkPayload,
+} from '../../core/types/link.types';
 import { Dialog } from '@angular/cdk/dialog';
 import {
   LinkModal,
   LinkModalData,
 } from '../../shared/ui/modals/link-modal/link-modal';
-import { filter, switchMap } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  Subject,
+  switchMap,
+} from 'rxjs';
 import { UrlCard } from '../../shared/components/url-card/url-card';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UserLink } from '../../core/types/user.type';
 
 @Component({
   selector: 'app-links',
@@ -21,9 +32,30 @@ import { UrlCard } from '../../shared/components/url-card/url-card';
 export class Links {
   private readonly authService = inject(AuthService);
   private readonly linkService = inject(LinkService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly dialog = inject(Dialog);
 
   readonly user = this.authService.currentUser;
+
+  private readonly toggleAction = new Subject<UpdateLinkPayload>();
+  readonly toggleAction$ = this.toggleAction
+    .pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((payload) => {
+        return this.linkService.toggleLink({
+          userId: payload.userId,
+          id: payload.id,
+          is_active: payload.is_active,
+        });
+      }),
+      takeUntilDestroyed(this.destroyRef),
+    )
+    .subscribe();
+
+  onToggleChanged(payload: UpdateLinkPayload) {
+    this.toggleAction.next(payload);
+  }
 
   openCreate(): void {
     const ref = this.dialog.open<CreateLinkPayload, LinkModalData>(LinkModal, {
@@ -35,6 +67,20 @@ export class Links {
       .pipe(
         filter(Boolean),
         switchMap((result) => this.linkService.createLink(result)),
+      )
+      .subscribe();
+  }
+
+  openModify(link: UserLink): void {
+    const ref = this.dialog.open<UpdateLinkPayload, LinkModalData>(LinkModal, {
+      data: { mode: 'edit', link: link },
+      width: '450px',
+    });
+
+    ref.closed
+      .pipe(
+        filter(Boolean),
+        switchMap((result) => this.linkService.modifyLink(result)),
       )
       .subscribe();
   }

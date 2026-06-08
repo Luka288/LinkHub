@@ -12,7 +12,9 @@
 
       <div class="urls">
         @for (url of data()?.links; track $index) {
-          <span>{{ url.title }}</span>
+          <span [class.disabled]="url.is_active === false">{{
+            url.title
+          }}</span>
         }
       </div>
 
