@@ -10,3 +10,7 @@ export interface UpdateLinkPayload {
   id?: number;
   userId?: number;
 }
+
+export interface DeleteLinkPayload {
+  id: number;
+}

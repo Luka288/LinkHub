@@ -18,6 +18,12 @@
           <i class="fa-solid fa-pen"></i>
         </button>
       </li>
+
+      <li>
+        <button class="btn" (click)="emitDelete.emit(urlData()!.id)">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </li>
     </ul>
   </div>
 </div>

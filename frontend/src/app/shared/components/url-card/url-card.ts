@@ -12,6 +12,7 @@ import { UpdateLinkPayload } from '../../../core/types/link.types';
 export class UrlCard {
   urlData = input<UserLink | null>(null);
   toggleChanged = output<UpdateLinkPayload>();
+  emitDelete = output<number>();
   openEdit = output<void>();
 
   onToggle(isActive: boolean) {

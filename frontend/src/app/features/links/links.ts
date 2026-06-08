@@ -57,6 +57,10 @@ export class Links {
     this.toggleAction.next(payload);
   }
 
+  onRemove(id: number) {
+    this.linkService.deleteLink({ id: id }).subscribe(console.log);
+  }
+
   openCreate(): void {
     const ref = this.dialog.open<CreateLinkPayload, LinkModalData>(LinkModal, {
       data: { mode: 'create' },

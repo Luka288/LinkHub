@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BASE_URL } from '../consts/api.endpoint';
-import { CreateLinkPayload, UpdateLinkPayload } from '../types/link.types';
+import {
+  CreateLinkPayload,
+  DeleteLinkPayload,
+  UpdateLinkPayload,
+} from '../types/link.types';
 import { Observable, tap } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UserLink } from '../types/user.type';
@@ -58,5 +62,22 @@ export class LinkService {
         });
       }),
     );
+  }
+
+  deleteLink(payload: DeleteLinkPayload) {
+    return this.http
+      .delete<{ message: string }>(`${BASE_URL}/links/delete/${payload.id}`)
+      .pipe(
+        tap(() => {
+          this.authService.currentUser.update((user) => {
+            if (!user) return user;
+
+            return {
+              ...user,
+              links: user.links.filter((url) => url.id !== payload.id),
+            };
+          });
+        }),
+      );
   }
 }

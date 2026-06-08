@@ -17,6 +17,7 @@
           [urlData]="link"
           (toggleChanged)="onToggleChanged($event)"
           (openEdit)="openModify(link)"
+          (emitDelete)="onRemove($event)"
         />
       }
     </div>
