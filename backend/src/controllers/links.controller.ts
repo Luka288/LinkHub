@@ -57,8 +57,8 @@ export const modifyLink = async (
   try {
     const userId = request.user?.userId;
 
-    const { id } = request.params;
-    const { title, url } = request.body;
+    // const { id } = request.params;
+    const { title, url, id } = request.body;
 
     if (!userId) {
       response.status(401).json({ error: "Unauthorized" });
@@ -96,7 +96,7 @@ export const toggleLink = async (
 ) => {
   try {
     const userId = request.user?.userId;
-    const { id } = request.params;
+    const { id, is_active } = request.body;
 
     if (!userId) {
       response.status(401).json({ error: "Unauthorized" });
@@ -105,10 +105,10 @@ export const toggleLink = async (
 
     const result = await pool.query(
       `UPDATE links
-       SET is_active = NOT is_active
+       SET is_active = $3
        WHERE id = $1 AND user_id = $2
        RETURNING *`,
-      [id, userId],
+      [id, userId, is_active],
     );
 
     if (result.rows.length === 0) {

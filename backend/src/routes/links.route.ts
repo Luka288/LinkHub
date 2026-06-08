@@ -14,8 +14,8 @@ router.use(authMiddleware);
 
 router.get("/", getLinks);
 router.post("/", createLink);
-router.put("/:id", modifyLink);
-router.patch("/:id/toggle", toggleLink);
+router.put("/update", modifyLink);
+router.patch("/toggle", toggleLink);
 router.delete("/delete/:id", deleteLink);
 
 export default router;
