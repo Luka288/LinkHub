@@ -1,6 +1,7 @@
 import type { Response } from "express";
 import { AuthenticatedRequest } from "../types/express";
 import pool from "../config/db";
+import { icoScrapper } from "../services/icon-scraper.service";
 
 // private profile endpoint
 export const getProfile = async (
@@ -35,9 +36,17 @@ export const getProfile = async (
       ),
     ]);
 
+    // scrapping website icons
+    const links = await Promise.all(
+      linksResult.rows.map(async (link) => ({
+        ...link,
+        favicon: await icoScrapper(link.url),
+      })),
+    );
+
     response.json({
       ...userResult.rows[0],
-      links: linksResult.rows,
+      links: links,
     });
   } catch (error) {
     console.error(error);
