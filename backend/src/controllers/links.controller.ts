@@ -1,6 +1,7 @@
 import type { Response } from "express";
 import { AuthenticatedRequest } from "../types/express";
 import pool from "../config/db";
+import { icoScrapper } from "../services/icon-scraper.service";
 
 // to fetch all the users links (protected)
 export const getLinks = async (
@@ -35,11 +36,37 @@ export const createLink = async (
     const userId = request.user?.userId;
     const { title, url } = request.body;
 
+    if (!userId) {
+      return response.status(401).json({ error: "Unauthorized" });
+    }
+
+    if (!title || !url) {
+      return response.status(400).json({ error: "Title and url are required" });
+    }
+
+    let hostname: string;
+    try {
+      hostname = new URL(url).hostname.replace(/^www\./, "");
+    } catch {
+      return response.status(400).json({ error: "Invalid url" });
+    }
+
+    const existing = await pool.query(
+      `SELECT favicon_url FROM links WHERE domain = $1 AND favicon_url IS NOT NULL LIMIT 1`,
+      [hostname],
+    );
+
+    let faviconUrl: string | null = existing.rows[0]?.favicon_url ?? null;
+
+    if (!faviconUrl) {
+      faviconUrl = (await icoScrapper(url)) ?? null;
+    }
+
     const result = await pool.query(
-      `INSERT INTO links (user_id, title, url)
-     VALUES ($1, $2, $3)
-     RETURNING *`,
-      [userId, title, url],
+      `INSERT INTO links (user_id, title, url, domain, favicon_url)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING *`,
+      [userId, title, url, hostname, faviconUrl],
     );
 
     response.status(201).json(result.rows[0]);
@@ -56,8 +83,6 @@ export const modifyLink = async (
 ) => {
   try {
     const userId = request.user?.userId;
-
-    // const { id } = request.params;
     const { title, url, id } = request.body;
 
     if (!userId) {
@@ -70,12 +95,29 @@ export const modifyLink = async (
       return;
     }
 
+    let hostname: string;
+
+    try {
+      hostname = new URL(url).hostname.replace(/^www\./, "");
+    } catch {
+      response.status(400).json({ error: "Invalid url" });
+      return;
+    }
+
+    const existing = await pool.query(
+      `SELECT favicon_url FROM links WHERE domain = $1 AND favicon_url IS NOT NULL LIMIT 1`,
+      [hostname],
+    );
+
+    const faviconUrl =
+      existing.rows[0]?.favicon_url ?? (await icoScrapper(url)) ?? null;
+
     const result = await pool.query(
       `UPDATE links
-       SET title = $1, url = $2
-       WHERE id = $3 AND user_id = $4
+       SET title = $1, url = $2, domain = $3, favicon_url = $4
+       WHERE id = $5 AND user_id = $6
        RETURNING *`,
-      [title, url, id, userId],
+      [title, url, hostname, faviconUrl, id, userId],
     );
 
     if (result.rows.length === 0) {

@@ -2,7 +2,6 @@ import * as cheerio from "cheerio";
 
 /* 
     simple cheerio web scrapper to get every single user link icon
-
 */
 export async function icoScrapper(url: string) {
   try {

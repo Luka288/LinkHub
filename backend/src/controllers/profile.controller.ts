@@ -40,7 +40,6 @@ export const getProfile = async (
     const links = await Promise.all(
       linksResult.rows.map(async (link) => ({
         ...link,
-        favicon: await icoScrapper(link.url),
       })),
     );
 
