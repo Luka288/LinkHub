@@ -6,7 +6,7 @@ import {
   DeleteLinkPayload,
   UpdateLinkPayload,
 } from '../types/link.types';
-import { Observable, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UserLink } from '../types/user.type';
 
@@ -30,9 +30,17 @@ export class LinkService {
   }
 
   toggleLink(payload: UpdateLinkPayload): Observable<UserLink> {
+    const currentUser = this.authService.currentUser;
+
+    const matchUser = currentUser()!.links.find((url) => url.id === payload.id);
+
+    if (payload.is_active === matchUser?.is_active) {
+      return of(matchUser as UserLink);
+    }
+
     return this.http.patch<UserLink>(`${BASE_URL}/links/toggle`, payload).pipe(
       tap((updatedLink: UserLink) => {
-        this.authService.currentUser.update((user) => {
+        currentUser.update((user) => {
           if (!user) return user;
 
           return {
