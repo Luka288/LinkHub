@@ -1,5 +1,5 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LinkModalData } from '../../../../core/types/modal.type';
+import { debounceTime, startWith, tap } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-link-modal',
@@ -29,6 +31,21 @@ export class LinkModal {
       Validators.required,
       Validators.pattern(/^https?:\/\/.+/),
     ]),
+  });
+
+  private initialValue = this.form.getRawValue();
+
+  readonly formValue = toSignal(
+    this.form.valueChanges.pipe(startWith(this.form.getRawValue())),
+    { initialValue: this.form.getRawValue() },
+  );
+
+  readonly isChanged = computed(() => {
+    const val = this.formValue();
+
+    return (
+      val.title !== this.initialValue.title || val.url !== this.initialValue.url
+    );
   });
 
   readonly isEdit = computed(() => this.data.mode === 'create');

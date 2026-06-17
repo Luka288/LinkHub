@@ -49,7 +49,7 @@
     <button
       type="submit"
       class="btn-submit"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || !isChanged()"
       (click)="submit()"
     >
       {{ isEdit() ? "Save changes" : "Add link" }}
