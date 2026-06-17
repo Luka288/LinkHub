@@ -1,0 +1,21 @@
+@use "../../../../../styles/mixins.scss" as *;
+@use "../../../../../styles/variables.scss" as *;
+
+.modal-body {
+  width: 460px;
+  background: $bg-surface;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  box-sizing: border-box;
+  box-shadow: $shadow-lg;
+  text-align: center;
+  font-family: $font-inter;
+
+  #confirmation-message {
+    font-size: $font-xl;
+  }
+
+  .modal-actions {
+    @include flex($flex-direction: row, $gap: 10px);
+  }
+}

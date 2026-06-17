@@ -8,10 +8,7 @@ import {
   UpdateLinkPayload,
 } from '../../core/types/link.types';
 import { Dialog } from '@angular/cdk/dialog';
-import {
-  LinkModal,
-  LinkModalData,
-} from '../../shared/ui/modals/link-modal/link-modal';
+import { LinkModal } from '../../shared/ui/modals/link-modal/link-modal';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -22,6 +19,7 @@ import {
 import { UrlCard } from '../../shared/components/url-card/url-card';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserLink } from '../../core/types/user.type';
+import { LinkModalData } from '../../core/types/modal.type';
 
 @Component({
   selector: 'app-links',
@@ -63,7 +61,7 @@ export class Links {
 
   openCreate(): void {
     const ref = this.dialog.open<CreateLinkPayload, LinkModalData>(LinkModal, {
-      data: { mode: 'create' },
+      data: { kind: 'link', mode: 'create' },
       width: '450px',
     });
 
@@ -77,7 +75,7 @@ export class Links {
 
   openModify(link: UserLink): void {
     const ref = this.dialog.open<UpdateLinkPayload, LinkModalData>(LinkModal, {
-      data: { mode: 'edit', link: link },
+      data: { kind: 'link', mode: 'edit', link },
       width: '450px',
     });
 

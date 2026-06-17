@@ -1,6 +1,5 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { Component, computed, inject } from '@angular/core';
-import { UserLink } from '../../../../core/types/user.type';
 import {
   FormControl,
   FormGroup,
@@ -9,11 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
-export interface LinkModalData {
-  mode: 'create' | 'edit';
-  link?: UserLink;
-}
+import { LinkModalData } from '../../../../core/types/modal.type';
 
 @Component({
   selector: 'app-link-modal',
@@ -36,7 +31,7 @@ export class LinkModal {
     ]),
   });
 
-  readonly isEdit = computed(() => this.data.mode === 'edit');
+  readonly isEdit = computed(() => this.data.mode === 'create');
 
   submit(): void {
     if (this.form.invalid) {

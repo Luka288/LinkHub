@@ -1,7 +1,13 @@
 <div class="url-card">
   <div class="url-info">
-    <h3>{{ urlData()?.title }}</h3>
-    <span>{{ urlData()?.url }}</span>
+    <div class="ico">
+      <img [src]="urlData()?.favicon" alt="url-ico" draggable="false" />
+    </div>
+
+    <div class="text-wrapper">
+      <h3>{{ urlData()?.title }}</h3>
+      <span>{{ urlData()?.url }}</span>
+    </div>
   </div>
 
   <div class="card-actions">
@@ -20,7 +26,7 @@
       </li>
 
       <li>
-        <button class="btn" (click)="emitDelete.emit(urlData()!.id)">
+        <button class="btn" (click)="removeAction(urlData()!)">
           <i class="fa-solid fa-trash-can"></i>
         </button>
       </li>

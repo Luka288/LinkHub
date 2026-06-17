@@ -50,6 +50,25 @@
   animation: spin 0.7s linear infinite;
 }
 
+.base-btn.secondary {
+  background: $dark-purple;
+  color: white;
+
+  &:hover {
+    background: $purple-hover;
+  }
+}
+
+.base-btn.danger {
+  background: $alert-error-bg;
+  color: $alert-error-text;
+  border: 1px solid $alert-error-border;
+
+  &:hover {
+    background: rgba($error, 0.12);
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);

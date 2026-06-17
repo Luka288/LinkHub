@@ -10,14 +10,35 @@
   @include flex($align-items: center, $justify-content: space-between);
 
   .url-info {
-    h3 {
-      margin: 0;
-      font-weight: 500;
+    @include flex($justify-content: center, $flex-direction: row, $gap: 15px);
+
+    .text-wrapper {
+      h3 {
+        margin: 0;
+        font-weight: 500;
+      }
+
+      span {
+        margin: 0;
+        font-size: 12px;
+      }
     }
 
-    span {
-      margin: 0;
-      font-size: 12px;
+    .ico {
+      width: 35px;
+      height: 35px;
+
+      img {
+        width: 35px;
+        height: 35px;
+        object-fit: contain;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-drag: none;
+        pointer-events: none;
+      }
     }
   }
 

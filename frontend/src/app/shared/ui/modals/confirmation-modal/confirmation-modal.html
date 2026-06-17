@@ -1,0 +1,13 @@
+<div
+  class="modal-body"
+  role="alertdialog"
+  aria-modal="true"
+  aria-describedby="confirmation-message"
+>
+  <p id="confirmation-message" class="modal-message">{{ modalData.message }}</p>
+
+  <div class="modal-actions">
+    <app-button variant="primary" (clicked)="cancel()">Cancel</app-button>
+    <app-button variant="danger" (clicked)="confirm()">Confirm</app-button>
+  </div>
+</div>
