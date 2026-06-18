@@ -46,6 +46,7 @@
     .user-urls {
       width: 100%;
       @include flex($flex-direction: column, $gap: 25px);
+      overflow: auto;
     }
   }
 

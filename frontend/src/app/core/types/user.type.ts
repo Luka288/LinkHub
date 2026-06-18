@@ -17,4 +17,5 @@ export interface UserLink {
   order_index: number;
   created_at: string;
   favicon_url: string;
+  domain: string | null;
 }

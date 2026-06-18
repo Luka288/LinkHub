@@ -1,0 +1,31 @@
+<section id="public-profile">
+  <div class="profile">
+    <div class="user">
+      <div class="image-container">
+        @if (!publicProfile()?.user?.avatar_url) {
+          <div class="avatar">
+            <p id="custom-pic">
+              {{ publicProfile()?.user?.username?.charAt(0) }}
+            </p>
+          </div>
+        } @else {
+          <img [src]="publicProfile()?.user?.avatar_url" alt="" />
+        }
+      </div>
+      <div class="profile-details">
+        <p>@{{ publicProfile()?.user?.username }}</p>
+        <span>{{ publicProfile()?.user?.bio }}</span>
+      </div>
+    </div>
+
+    <div class="user-urls">
+      @for (url of publicProfile()?.links; track $index) {
+        <app-url-card
+          [urlData]="url"
+          [showActions]="false"
+          (emitter)="openUrl(url)"
+        />
+      }
+    </div>
+  </div>
+</section>

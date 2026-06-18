@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 import { guestGuard } from './core/guards/guest-guard';
+import { TitleResolver } from './core/resolvers/title.resolver';
 
 export const routes: Routes = [
   // unprotected public route
@@ -50,6 +51,15 @@ export const routes: Routes = [
         ],
       },
     ],
+  },
+
+  {
+    path: 'p/:username',
+    title: TitleResolver,
+    loadComponent: () =>
+      import('./features/public-profile/public-profile').then(
+        (m) => m.PublicProfile,
+      ),
   },
 
   // protected dashboard routes

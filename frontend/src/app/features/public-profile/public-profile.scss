@@ -1,0 +1,59 @@
+@use "../../../styles/mixins.scss" as *;
+@use "../../../styles/variables.scss" as *;
+
+#public-profile {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $off-white;
+  @include flex($justify-content: center, $align-items: flex-start);
+
+  .profile {
+    width: 100%;
+    max-width: 680px;
+    padding: 48px 24px;
+    @include flex($flex-direction: column, $align-items: center, $gap: 32px);
+
+    .image-container {
+      @include flex($justify-content: center);
+
+      .avatar {
+        width: 68px;
+        height: 68px;
+        border-radius: $radius-full;
+        background: $primary;
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        @include flex-center();
+        font-family: $font-roboto;
+      }
+    }
+
+    .profile-details {
+      text-align: center;
+      font-family: $font-roboto;
+      @include flex($flex-direction: column, $gap: 12px);
+
+      p {
+        margin: 0;
+        font-size: $font-md;
+        font-weight: 700;
+        color: $text-primary;
+        letter-spacing: 0.01em;
+      }
+
+      span {
+        font-size: $font-sm;
+        color: $text-secondary;
+        line-height: 1.5;
+        max-width: 300px;
+      }
+    }
+
+    .user-urls {
+      width: 100%;
+      @include flex($flex-direction: column, $gap: 12px);
+    }
+  }
+}

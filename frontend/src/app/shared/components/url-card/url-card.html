@@ -1,4 +1,8 @@
-<div class="url-card">
+<div
+  class="url-card"
+  [style]="!showActions() ? 'cursor: pointer' : 'cursor: default'"
+  (click)="emitter.emit()"
+>
   <div class="url-info">
     <div class="ico">
       <img [src]="urlData()?.favicon_url" alt="url-ico" draggable="false" />
@@ -10,24 +14,26 @@
     </div>
   </div>
 
-  <div class="card-actions">
-    <div class="stats">
-      <span class="clicks">{{ urlData()?.click_count }} clicks</span>
+  @if (showActions()) {
+    <div class="card-actions">
+      <div class="stats">
+        <span class="clicks">{{ urlData()?.click_count }} clicks</span>
+      </div>
+
+      <div class="actions">
+        <app-toggle
+          [isActive]="urlData()!.is_active"
+          (toggled)="onToggle($event)"
+        />
+
+        <button class="icon-btn" (click)="openEdit.emit()">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+
+        <button class="icon-btn danger" (click)="removeAction(urlData()!)">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
     </div>
-
-    <div class="actions">
-      <app-toggle
-        [isActive]="urlData()!.is_active"
-        (toggled)="onToggle($event)"
-      />
-
-      <button class="icon-btn" (click)="openEdit.emit()">
-        <i class="fa-solid fa-pen"></i>
-      </button>
-
-      <button class="icon-btn danger" (click)="removeAction(urlData()!)">
-        <i class="fa-solid fa-trash-can"></i>
-      </button>
-    </div>
-  </div>
+  }
 </div>

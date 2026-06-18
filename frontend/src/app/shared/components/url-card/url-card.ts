@@ -1,21 +1,11 @@
-import {
-  booleanAttribute,
-  Component,
-  inject,
-  input,
-  output,
-} from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { UserLink } from '../../../core/types/user.type';
 import { Toggle } from '../../ui/toggle/toggle';
 import { UpdateLinkPayload } from '../../../core/types/link.types';
 import { Dialog } from '@angular/cdk/dialog';
-import {
-  ConfirmationModalData,
-  LinkModalData,
-} from '../../../core/types/modal.type';
+import { ConfirmationModalData } from '../../../core/types/modal.type';
 import { ConfirmationModal } from '../../ui/modals/confirmation-modal/confirmation-modal';
-import { filter, switchMap, tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter, tap } from 'rxjs';
 
 @Component({
   selector: 'app-url-card',
@@ -30,6 +20,8 @@ export class UrlCard {
   toggleChanged = output<UpdateLinkPayload>();
   emitDelete = output<number>();
   openEdit = output<void>();
+  showActions = input<boolean>(true);
+  emitter = output<void>();
 
   onToggle(isActive: boolean) {
     const link = this.urlData();

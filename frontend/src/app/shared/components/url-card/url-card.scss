@@ -8,6 +8,7 @@
   border: 1px solid $border;
   font-family: $font-inter;
   @include flex($align-items: center, $justify-content: space-between);
+  background-color: $bg-card;
 
   .url-info {
     @include flex($justify-content: center, $flex-direction: row, $gap: 15px);
