@@ -18,6 +18,7 @@ import { credentialsInterceptor } from './core/interceptors/credentials-intercep
 import { AuthService } from './core/services/auth.service';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,6 +31,7 @@ export const appConfig: ApplicationConfig = {
         credentialsInterceptor,
         authInterceptor,
         ErrorInterceptor,
+        LoadingInterceptor,
       ]),
     ),
     provideAppInitializer(() => {

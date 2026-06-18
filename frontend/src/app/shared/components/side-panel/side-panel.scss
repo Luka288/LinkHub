@@ -2,8 +2,8 @@
 @use "../../../../styles/mixins.scss" as *;
 
 #panel {
-  max-width: 230px;
-  width: 100%;
+  // max-width: 230px;
+  // width: 100%;
   height: 100vh;
   background-color: $sidebar-bg;
   border-right: 1px solid $sidebar-border;

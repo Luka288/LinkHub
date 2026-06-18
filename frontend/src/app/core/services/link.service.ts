@@ -7,6 +7,7 @@ import {
   UpdateLinkPayload,
 } from '../types/link.types';
 import { Observable, of, tap } from 'rxjs';
+import { LoadingService } from './loading.service';
 import { AuthService } from './auth.service';
 import { UserLink } from '../types/user.type';
 
@@ -16,6 +17,7 @@ import { UserLink } from '../types/user.type';
 export class LinkService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
+  private readonly loadingService = inject(LoadingService);
 
   createLink(payload: CreateLinkPayload): Observable<UserLink> {
     return this.http.post<UserLink>(`${BASE_URL}/links`, payload).pipe(
@@ -55,7 +57,6 @@ export class LinkService {
   }
 
   modifyLink(payload: UpdateLinkPayload) {
-    console.log(payload);
     return this.http.put<UserLink>(`${BASE_URL}/links/update`, payload).pipe(
       tap((modifiedLink) => {
         this.authService.currentUser.update((user) => {

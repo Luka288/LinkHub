@@ -1,10 +1,12 @@
-<!-- admin layout dashboard where user manages its own links, page design -->
 <section id="private-layout">
   <aside id="sidebar">
     <app-side-panel />
   </aside>
 
   <div id="content">
+    @if (loading()) {
+      <app-spinner />
+    }
     <router-outlet />
   </div>
 </section>

@@ -8,9 +8,14 @@
   grid-template-columns: 260px 1fr;
   box-sizing: border-box;
   overflow: hidden;
+
+  #sidebar {
+    width: 100%;
+  }
 }
 
 #content {
   overflow-y: auto;
+  position: relative;
   padding: $spacing-xl $spacing-2xl;
 }
