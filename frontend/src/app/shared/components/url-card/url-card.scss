@@ -43,41 +43,67 @@
   }
 
   .card-actions {
-    ul {
-      @include flex($flex-direction: row, $gap: 10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-md;
 
-      li {
-        width: fit-content;
-        list-style: none;
+    padding: 6px 8px;
+    border-radius: $radius-md;
+    // background: $bg-base;
 
-        .btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 6px 12px;
-          font-family: $font-inter;
-          font-size: 12px;
-          font-weight: 500;
-          border: 1px solid $border;
-          border-radius: $radius-sm;
-          cursor: pointer;
-          transition: $transition;
-          background-color: $primary;
-          color: $off-white;
+    .stats {
+      .clicks {
+        font-size: 12px;
+        color: $text-secondary;
+        background: $primary-light;
+        padding: 4px 10px;
+        border-radius: $radius-full;
+        font-weight: 500;
+      }
+    }
 
-          i {
-            font-size: 12px;
-          }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-          &:hover {
-            color: $text-primary;
-            background: $bg-hover;
-            border-color: $primary;
-          }
+    .icon-btn {
+      width: 34px;
+      height: 34px;
 
-          &:active {
-            background: $active-white;
-          }
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: $radius-sm;
+      border: 1px solid $border;
+      background: $bg-surface;
+
+      cursor: pointer;
+      transition: $transition;
+
+      i {
+        font-size: 13px;
+        color: $text-secondary;
+      }
+
+      &:hover {
+        background: $bg-hover;
+        border-color: $primary;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      &.danger:hover {
+        border-color: $error;
+        background: rgba($error, 0.08);
+
+        i {
+          color: $error;
         }
       }
     }

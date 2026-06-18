@@ -11,25 +11,23 @@
   </div>
 
   <div class="card-actions">
-    <ul>
-      <li>
-        <app-toggle
-          [isActive]="urlData()!.is_active"
-          (toggled)="onToggle($event)"
-        />
-      </li>
+    <div class="stats">
+      <span class="clicks">{{ urlData()?.click_count }} clicks</span>
+    </div>
 
-      <li>
-        <button class="btn" (click)="openEdit.emit()">
-          <i class="fa-solid fa-pen"></i>
-        </button>
-      </li>
+    <div class="actions">
+      <app-toggle
+        [isActive]="urlData()!.is_active"
+        (toggled)="onToggle($event)"
+      />
 
-      <li>
-        <button class="btn" (click)="removeAction(urlData()!)">
-          <i class="fa-solid fa-trash-can"></i>
-        </button>
-      </li>
-    </ul>
+      <button class="icon-btn" (click)="openEdit.emit()">
+        <i class="fa-solid fa-pen"></i>
+      </button>
+
+      <button class="icon-btn danger" (click)="removeAction(urlData()!)">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+    </div>
   </div>
 </div>

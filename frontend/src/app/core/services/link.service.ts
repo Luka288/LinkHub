@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BASE_URL } from '../consts/api.endpoint';
 import {
@@ -7,9 +7,9 @@ import {
   UpdateLinkPayload,
 } from '../types/link.types';
 import { Observable, of, tap } from 'rxjs';
-import { LoadingService } from './loading.service';
 import { AuthService } from './auth.service';
 import { UserLink } from '../types/user.type';
+import { ENABLE_LOADING } from '../tokens/http.token';
 
 @Injectable({
   providedIn: 'root',
@@ -17,18 +17,21 @@ import { UserLink } from '../types/user.type';
 export class LinkService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
-  private readonly loadingService = inject(LoadingService);
 
   createLink(payload: CreateLinkPayload): Observable<UserLink> {
-    return this.http.post<UserLink>(`${BASE_URL}/links`, payload).pipe(
-      tap((link: UserLink) => {
-        this.authService.currentUser.update((user) => {
-          if (!user) return null;
+    return this.http
+      .post<UserLink>(`${BASE_URL}/links`, payload, {
+        context: new HttpContext().set(ENABLE_LOADING, true),
+      })
+      .pipe(
+        tap((link: UserLink) => {
+          this.authService.currentUser.update((user) => {
+            if (!user) return null;
 
-          return { ...user, links: [...user.links, link] };
-        });
-      }),
-    );
+            return { ...user, links: [...user.links, link] };
+          });
+        }),
+      );
   }
 
   toggleLink(payload: UpdateLinkPayload): Observable<UserLink> {

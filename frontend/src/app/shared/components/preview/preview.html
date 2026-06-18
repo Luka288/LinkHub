@@ -4,7 +4,9 @@
     <div class="phone-screen">
       <div class="user-mini-card">
         <div class="avatar">
-          {{ data()?.username?.charAt(0)?.toUpperCase() }}
+          <p>
+            {{ data()?.username?.charAt(0)?.toUpperCase() }}
+          </p>
         </div>
         <p class="username">{{ data()?.username }}</p>
         <span class="bio">{{ data()?.bio }}</span>
@@ -12,9 +14,10 @@
 
       <div class="urls">
         @for (url of data()?.links; track $index) {
-          <span [class.disabled]="url.is_active === false">{{
-            url.title
-          }}</span>
+          <span [class.disabled]="url.is_active === false">
+            <img [src]="url.favicon_url" alt="" />
+            {{ url.title }}</span
+          >
         }
       </div>
 
