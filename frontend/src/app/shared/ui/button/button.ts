@@ -9,7 +9,7 @@ import { Component, input, output } from '@angular/core';
 })
 export class Button {
   disabled = input<boolean>();
-  clicked = output<void>();
   variant = input<'primary' | 'secondary' | 'danger'>();
   loading = input<boolean>();
+  clicked = output<void>();
 }

@@ -1,3 +1,5 @@
+import { ThemePreset } from '../themes/themes';
+
 export interface UserResponse {
   avatar_url: string | null;
   bio: string | null;
@@ -5,6 +7,7 @@ export interface UserResponse {
   id: number;
   username: string;
   links: UserLink[];
+  preferences: ThemePreset;
 }
 
 export interface UserLink {

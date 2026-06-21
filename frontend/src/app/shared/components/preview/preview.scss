@@ -25,6 +25,7 @@
     background: $sidebar-bg;
     overflow: hidden;
     position: relative;
+    background: var(--bg, $sidebar-bg);
 
     &::before {
       content: "";
@@ -48,6 +49,7 @@
     overflow-x: hidden;
     @include flex(flex-start, center, column, 0);
     box-sizing: border-box;
+    background-color: var(--bg, $sidebar-bg);
   }
 
   .user-mini-card {
@@ -70,15 +72,17 @@
     .username {
       font-size: 0.875rem;
       font-weight: 600;
-      color: $text-primary;
+      // color: $text-primary;
       margin-bottom: 4px;
+      color: var(--text-primary, $text-primary);
     }
 
     .bio {
       font-size: 0.7rem;
-      color: $text-muted;
+      // color: $text-muted;
       line-height: 1.4;
       padding: 0 8px;
+      color: var(--text-secondary, $text-muted);
     }
   }
 
@@ -91,7 +95,7 @@
       width: 100%;
       min-height: 44px;
       @include flex(center, center);
-      background: $primary;
+      // background: $primary;
       border: 1px solid rgba(108, 99, 255, 0.15);
       border-radius: 12px;
       font-size: 0.78rem;
@@ -101,17 +105,13 @@
       transition: $transition;
       box-sizing: border-box;
       @include flex($gap: 10px);
+      background: var(--button-bg, $primary);
+      color: var(--button-text, $off-white);
 
       img {
         width: 25px;
         height: 25px;
       }
-
-      // &:first-child {
-      //   background: $primary;
-      //   color: #fff;
-      //   border-color: transparent;
-      // }
 
       &:hover {
         box-shadow: $shadow-sm;
@@ -139,12 +139,15 @@
 
   .phone-footer {
     font-size: 0.65rem;
-    color: $text-muted;
+    // color: $text-muted;
     font-family: $font-roboto;
 
+    color: var(--text-secondary, $text-muted);
+
     span {
-      color: $primary;
+      // color: $primary;
       font-weight: 600;
+      color: var(--button-bg, $primary);
     }
   }
 }

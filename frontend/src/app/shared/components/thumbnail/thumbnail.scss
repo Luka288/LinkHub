@@ -1,0 +1,25 @@
+@use "../../../../styles/variables.scss" as *;
+@use "../../../../styles/mixins.scss" as *;
+
+.theme-thumb {
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  border: 0.5px solid $border;
+  transition: $transition;
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+  font-size: $font-xl;
+  border: $border;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+  }
+
+  &.is-selected {
+    border: 2px solid $primary;
+    box-shadow: $shadow-primary;
+  }
+}

@@ -1,1 +1,40 @@
-<p>appearance works!</p>
+<section id="appereance-wrapper">
+  <aside class="content-wrapper">
+    <div class="themes">
+      <div class="title-container">
+        <h1>Themes</h1>
+      </div>
+
+      <div class="themes-wrapper">
+        @for (item of themes; track $index) {
+          <app-thumbnail
+            [preset]="item"
+            (thubnailEmitter)="selectedTheme.set($event)"
+          />
+        }
+      </div>
+    </div>
+
+    <div id="action">
+      <app-button
+        [disabled]="!selectedTheme()"
+        [variant]="'primary'"
+        (clicked)="updateTheme(selectedTheme()!)"
+      >
+        Save
+      </app-button>
+
+      @if (selectedTheme()) {
+        <app-button
+          [variant]="'secondary'"
+          (clicked)="this.selectedTheme.set(null)"
+          >Cancel</app-button
+        >
+      }
+    </div>
+  </aside>
+
+  <aside id="preview">
+    <app-preview [data]="user()" [themePreview]="selectedTheme()" />
+  </aside>
+</section>

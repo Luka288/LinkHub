@@ -1,8 +1,10 @@
+import { ThemePreset } from '../themes/themes';
 import { UserLink } from './user.type';
 
 export interface PublicProfileResponse {
   user: PublicProfileInterface;
   links: UserLink[];
+  preferences: ThemePreset;
 }
 
 export interface PublicProfileInterface {
@@ -10,4 +12,5 @@ export interface PublicProfileInterface {
   username: string;
   bio: string;
   avatar_url: null;
+  preferences: ThemePreset;
 }

@@ -6,12 +6,17 @@ import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmationModalData } from '../../../core/types/modal.type';
 import { ConfirmationModal } from '../../ui/modals/confirmation-modal/confirmation-modal';
 import { filter, tap } from 'rxjs';
+import { ThemePreset } from '../../../core/themes/themes';
 
 @Component({
   selector: 'app-url-card',
   imports: [Toggle],
   templateUrl: './url-card.html',
   styleUrl: './url-card.scss',
+  host: {
+    '[style.--card-bg]': 'theme()?.button_bg',
+    '[style.--card-text]': 'theme()?.button_text',
+  },
 })
 export class UrlCard {
   private readonly dialog = inject(Dialog);
@@ -21,6 +26,7 @@ export class UrlCard {
   emitDelete = output<number>();
   openEdit = output<void>();
   showActions = input<boolean>(true);
+  theme = input<ThemePreset>();
   emitter = output<void>();
 
   onToggle(isActive: boolean) {

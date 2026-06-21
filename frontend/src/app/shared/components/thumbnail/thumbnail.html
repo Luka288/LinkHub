@@ -1,0 +1,14 @@
+<div
+  class="theme-thumb"
+  [style.background]="preset().background"
+  [style.borderRadius]="radiusMap[preset().radius]"
+  (click)="thubnailEmitter.emit(preset())"
+>
+  <span [style.color]="preset().text_primary">Aa</span>
+
+  <div
+    class="theme-thumb-btn"
+    [style.background]="preset().button_bg"
+    [style.borderRadius]="radiusMap[preset().radius]"
+  ></div>
+</div>

@@ -25,9 +25,8 @@
   }
 
   &:disabled {
-    background: $primary-light;
+    opacity: 0.4;
     cursor: not-allowed;
-    transform: none;
   }
 }
 
@@ -50,14 +49,14 @@
   animation: spin 0.7s linear infinite;
 }
 
-.base-btn.secondary {
-  background: $dark-purple;
-  color: white;
+// .base-btn.secondary {
+//   background: $dark-purple;
+//   color: white;
 
-  &:hover {
-    background: $purple-hover;
-  }
-}
+//   &:hover {
+//     background: $purple-hover;
+//   }
+// }
 
 .base-btn.danger {
   background: $alert-error-bg;
@@ -66,6 +65,23 @@
 
   &:hover {
     background: rgba($error, 0.12);
+  }
+}
+
+.base-btn.secondary {
+  padding: 9px $spacing-md;
+  border-radius: $radius-sm;
+  border: 1px solid $border;
+  background: transparent;
+  color: $text-secondary;
+  font-size: $font-sm;
+  font-family: $font-roboto;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover {
+    background: $bg-hover;
+    color: $text-primary;
   }
 }
 

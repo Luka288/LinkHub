@@ -1,0 +1,48 @@
+@use "../../../styles/mixins.scss" as *;
+@use "../../../styles/variables.scss" as *;
+
+#appereance-wrapper {
+  @include flex(
+    $justify-content: space-between,
+    $flex-direction: row,
+    $gap: 20px
+  );
+
+  .content-wrapper {
+    width: 100%;
+    text-align: center;
+    @include flex($flex-direction: column);
+
+    .themes {
+      .title-container {
+        h1 {
+          font-family: $font-inter;
+          color: $text-muted;
+        }
+      }
+
+      .themes-wrapper {
+        @include flex(
+          $justify-content: center,
+          $flex-direction: row,
+          $gap: 20px
+        );
+      }
+    }
+
+    app-thumbnail {
+      height: fit-content;
+    }
+
+    #action {
+      max-width: 550px;
+      width: 100%;
+      margin: auto;
+      @include flex($flex-direction: row, $gap: 30px);
+
+      app-button {
+        max-width: 250px;
+      }
+    }
+  }
+}

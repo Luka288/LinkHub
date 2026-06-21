@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, computed, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PublicProfileService } from '../../core/services/public-profile.service';
@@ -11,6 +11,13 @@ import { UserLink } from '../../core/types/user.type';
   imports: [UrlCard],
   templateUrl: './public-profile.html',
   styleUrl: './public-profile.scss',
+  host: {
+    '[style.--bg]': 'theme()?.background',
+    '[style.--text-primary]': 'theme()?.text_primary',
+    '[style.--text-secondary]': 'theme()?.text_secondary',
+    '[style.--button-bg]': 'theme()?.button_bg',
+    '[style.--button-text]': 'theme()?.button_text',
+  },
 })
 export class PublicProfile {
   private readonly profileService = inject(PublicProfileService);
@@ -26,6 +33,8 @@ export class PublicProfile {
       }),
     ),
   );
+
+  readonly theme = computed(() => this.publicProfile()?.preferences);
 
   openUrl(link: UserLink) {
     const username = this.publicProfile()?.user.username;

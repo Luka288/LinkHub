@@ -24,6 +24,7 @@
           [urlData]="url"
           [showActions]="false"
           (emitter)="openUrl(url)"
+          [theme]="publicProfile()?.preferences"
         />
       }
     </div>
