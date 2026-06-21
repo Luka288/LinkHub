@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { authMiddleware } from "../middlewares/auth.middleware";
 import { getPublicProfile, trackClick } from "../controllers/public.controller";
+import { updateAppearance } from "../controllers/profile.controller";
 
 const router = Router();
 

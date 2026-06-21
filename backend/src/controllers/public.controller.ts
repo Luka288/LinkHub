@@ -25,9 +25,19 @@ export const getPublicProfile = async (
       [user.id],
     );
 
+    const preferences = await pool.query(
+      `
+        SELECT preset_id, background, text_primary, text_secondary, button_bg, button_text, radius
+        FROM user_appearance
+        WHERE user_id = $1
+        `,
+      [user.id],
+    );
+
     response.json({
       user,
       links: linksResult.rows,
+      preferences: preferences.rows[0] ?? null,
     });
   } catch (error) {
     console.error(error);
