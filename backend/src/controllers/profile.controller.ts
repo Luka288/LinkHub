@@ -37,9 +37,9 @@ export const getProfile = async (
 
       pool.query(
         `
-        SELECT preset_id, background, text_primary, text_secondary, button_bg, button_text, radius
-        FROM user_appearance
-        WHERE user_id = $1
+          SELECT preset_id, background, text_primary, text_secondary, button_bg, button_text, border, radius
+          FROM user_appearance
+          WHERE user_id = $1
         `,
         [userId],
       ),
@@ -105,6 +105,7 @@ export const updateAppearance = async (
       button_bg,
       button_text,
       radius,
+      border,
       font,
     } = request.body;
 
@@ -121,8 +122,8 @@ export const updateAppearance = async (
 
     const result = await pool.query(
       `
-      INSERT INTO user_appearance (user_id, preset_id, background, text_primary, text_secondary, button_bg, button_text, radius, font)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      INSERT INTO user_appearance (user_id, preset_id, background, text_primary, text_secondary, button_bg, button_text, border, radius, font)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       ON CONFLICT (user_id) DO UPDATE SET
         preset_id = EXCLUDED.preset_id,
         background = EXCLUDED.background,
@@ -130,6 +131,7 @@ export const updateAppearance = async (
         text_secondary = EXCLUDED.text_secondary,
         button_bg = EXCLUDED.button_bg,
         button_text = EXCLUDED.button_text,
+        border = EXCLUDED.border,
         radius = EXCLUDED.radius,
         font = EXCLUDED.font,
         updated_at = now()
@@ -143,6 +145,7 @@ export const updateAppearance = async (
         text_secondary,
         button_bg,
         button_text,
+        border,
         radius,
         font,
       ],

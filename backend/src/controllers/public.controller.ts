@@ -27,7 +27,7 @@ export const getPublicProfile = async (
 
     const preferences = await pool.query(
       `
-        SELECT preset_id, background, text_primary, text_secondary, button_bg, button_text, radius
+        SELECT preset_id, background, text_primary, text_secondary, button_bg, button_text, border, radius
         FROM user_appearance
         WHERE user_id = $1
         `,
