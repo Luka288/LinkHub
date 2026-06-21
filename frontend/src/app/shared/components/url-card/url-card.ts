@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, effect, inject, input, output } from '@angular/core';
 import { UserLink } from '../../../core/types/user.type';
 import { Toggle } from '../../ui/toggle/toggle';
 import { UpdateLinkPayload } from '../../../core/types/link.types';
@@ -16,6 +16,7 @@ import { ThemePreset } from '../../../core/themes/themes';
   host: {
     '[style.--card-bg]': 'theme()?.button_bg',
     '[style.--card-text]': 'theme()?.button_text',
+    '[style.--card-border]': 'theme()?.border',
   },
 })
 export class UrlCard {
@@ -28,6 +29,10 @@ export class UrlCard {
   showActions = input<boolean>(true);
   theme = input<ThemePreset>();
   emitter = output<void>();
+
+  constructor() {
+    effect(() => console.log(this.theme()));
+  }
 
   onToggle(isActive: boolean) {
     const link = this.urlData();

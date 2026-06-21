@@ -5,12 +5,14 @@
   border-radius: $radius-md;
   box-sizing: border-box;
   padding: 12px;
-  border: 1px solid $border;
+  // border: 1px solid $border;
   // background: $bg-card;
   box-shadow: $shadow-sm;
   font-family: $font-inter;
   transition: $transition;
   @include flex($align-items: center, $justify-content: space-between);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border, $border);
 
   .url-info {
     flex: 1;
@@ -74,17 +76,16 @@
   }
 
   .card-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include flex($justify-content: space-between, $align-items: center);
     gap: $spacing-md;
     flex-shrink: 0;
 
-    margin: 12px -12px -12px;
+    // margin: 12px -12px -12px;
     padding: 10px 12px;
     background: $bg-base;
     border-top: 1px solid $border;
     border-radius: 0 0 $radius-md $radius-md;
+    margin: 0;
 
     .stats {
       .clicks {
