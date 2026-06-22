@@ -13,7 +13,7 @@
             type="text"
             name="username"
             id="username"
-            [value]="user()?.username"
+            formControlName="username"
           />
         </div>
         <div class="warn">
@@ -25,12 +25,27 @@
       </div>
 
       <div class="form-wrapper">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" />
+        <label for="currentPassword">Old Password</label>
+        <input
+          type="password"
+          name="currentPassword"
+          id="currentPassword"
+          formControlName="currentPassword"
+        />
+      </div>
+
+      <div class="form-wrapper">
+        <label for="password">New Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          formControlName="password"
+        />
       </div>
 
       <div class="btn-wrapper">
-        <app-button variant="primary">Save</app-button>
+        <app-button variant="primary" (clicked)="onSubmit()">Save</app-button>
         <app-button variant="secondary">Cancel</app-button>
       </div>
     </form>
