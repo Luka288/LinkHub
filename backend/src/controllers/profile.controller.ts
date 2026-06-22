@@ -1,7 +1,7 @@
 import type { Response } from "express";
 import { AuthenticatedRequest } from "../types/express";
+import bcrypt from "bcrypt";
 import pool from "../config/db";
-import { icoScrapper } from "../services/icon-scraper.service";
 
 // private profile endpoint
 export const getProfile = async (
@@ -155,5 +155,131 @@ export const updateAppearance = async (
   } catch (error) {
     console.error(error);
     return response.status(500).json({ error: "Server error." });
+  }
+};
+
+export const updateUsername = async (
+  request: AuthenticatedRequest,
+  response: Response,
+) => {
+  try {
+    const userId = request.user?.userId;
+
+    const { username } = request.body;
+
+    if (!userId) {
+      response.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    if (!username) {
+      response.status(500).json({ error: "USERNAME WAS NOT PROVIDED" });
+      return;
+    }
+
+    if (!username || username.trim().length < 3) {
+      response
+        .status(400)
+        .json({ error: "Username must be at least 3 characters." });
+      return;
+    }
+
+    const result = await pool.query(
+      `UPDATE users SET username = $1 WHERE id = $2 RETURNING id, username`,
+      [username.trim(), userId],
+    );
+
+    response.json(result.rows[0]);
+  } catch (error: any) {
+    if (error.code === "23505") {
+      response.status(409).json({ error: "Username is already taken." });
+      return;
+    }
+    console.error(error);
+    response.status(500).json({ error: "Server error." });
+  }
+};
+
+export const updatePassword = async (
+  request: AuthenticatedRequest,
+  response: Response,
+) => {
+  try {
+    const userId = request.user?.userId;
+    const { currentPassword, newPassword } = request.body;
+
+    if (!userId) {
+      response.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    if (!newPassword || newPassword.length < 8) {
+      response
+        .status(400)
+        .json({ error: "Password must be at least 8 characters." });
+      return;
+    }
+
+    const userResult = await pool.query(
+      `SELECT password FROM users WHERE id = $1`,
+      [userId],
+    );
+
+    if (userResult.rows.length === 0) {
+      response.status(404).json({ error: "User not found." });
+      return;
+    }
+
+    const isValid = await bcrypt.compare(
+      currentPassword,
+      userResult.rows[0].password,
+    );
+
+    if (!isValid) {
+      response.status(401).json({ error: "Current password is incorrect." });
+      return;
+    }
+
+    const hashed = await bcrypt.hash(newPassword, 10);
+
+    await pool.query(`UPDATE users SET password = $1 WHERE id = $2`, [
+      hashed,
+      userId,
+    ]);
+
+    response.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: "Server error." });
+  }
+};
+
+export const updateProfileVisibility = async (
+  request: AuthenticatedRequest,
+  response: Response,
+) => {
+  try {
+    const userId = request.body.user_id;
+    const { is_public } = request.body;
+
+    if (!userId) {
+      response.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    if (!is_public) {
+      response.status(500).json({ error: "Invalid status" });
+      return;
+    }
+
+    const result = await pool.query(
+      `UPDATE users SET is_public = $1 WHERE id = $2 RETURNING id, is_public`,
+      [is_public, userId],
+    );
+
+    response.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: "Server error." });
   }
 };
