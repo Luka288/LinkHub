@@ -21,7 +21,11 @@
         <a>Appearance</a>
       </li>
 
-      <li>
+      <li
+        routerLink="/dashboard/settings"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
+      >
         <i class="fa-solid fa-gear"></i>
         <a>Settings</a>
       </li>

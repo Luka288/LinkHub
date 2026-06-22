@@ -14,3 +14,5 @@ export interface PublicProfileInterface {
   avatar_url: null;
   preferences: ThemePreset;
 }
+
+export type PublicUserLink = Omit<UserLink, 'click_count' | 'user_id'>;

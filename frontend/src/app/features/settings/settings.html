@@ -1,0 +1,32 @@
+<section id="settings">
+  <div class="title-container">
+    <h3>Settings</h3>
+    <span> Manage your account, profile and privacy </span>
+  </div>
+
+  <div class="routes">
+    <ul>
+      <li>
+        <a
+          routerLink="/dashboard/settings/account"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Account</a
+        >
+      </li>
+
+      <li>
+        <a
+          routerLink="/dashboard/settings/profile"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Profile</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <div class="settings-routes">
+    <router-outlet />
+  </div>
+</section>

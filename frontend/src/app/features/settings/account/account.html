@@ -1,0 +1,53 @@
+<div id="account-settings">
+  <div class="account-details">
+    <div class="container-title">
+      <span>Account details</span>
+    </div>
+
+    <form [formGroup]="accountForm">
+      <div class="form-wrapper">
+        <label for="username">Username</label>
+        <div class="username-input">
+          <span class="prefix">linkhub.app/p/</span>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            [value]="user()?.username"
+          />
+        </div>
+        <div class="warn">
+          <span
+            ><i class="fa-solid fa-triangle-exclamation"></i> Changing this
+            updates your public link</span
+          >
+        </div>
+      </div>
+
+      <div class="form-wrapper">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+      </div>
+
+      <div class="btn-wrapper">
+        <app-button variant="primary">Save</app-button>
+        <app-button variant="secondary">Cancel</app-button>
+      </div>
+    </form>
+  </div>
+
+  <div id="profile-visibility">
+    <div class="container-title">
+      <span>Profile visibility</span>
+    </div>
+
+    <div class="switch-container">
+      <div class="text-wrapper">
+        <p>Public profile</p>
+        <span>Anyone with your link can view your page</span>
+      </div>
+
+      <app-toggle></app-toggle>
+    </div>
+  </div>
+</div>

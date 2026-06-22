@@ -85,6 +85,35 @@ export const routes: Routes = [
           import('./features/appearance/appearance').then((m) => m.Appearance),
       },
 
+      {
+        path: 'settings',
+        title: 'LinkHub | Settings',
+        loadComponent: () =>
+          import('./features/settings/settings').then((m) => m.Settings),
+        children: [
+          {
+            path: 'account',
+            loadComponent: () =>
+              import('./features/settings/account/account').then(
+                (m) => m.Account,
+              ),
+          },
+
+          {
+            path: 'profile',
+            loadComponent: () =>
+              import('./features/settings/profile/profile').then(
+                (m) => m.Profile,
+              ),
+          },
+
+          {
+            path: '**',
+            redirectTo: 'account',
+          },
+        ],
+      },
+
       // redirect to HOME page of protected routes (links)
       {
         path: '',
