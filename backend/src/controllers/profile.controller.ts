@@ -78,9 +78,9 @@ export const updateProfile = async (
 
     const result = await pool.query(
       `UPDATE users 
-   SET bio = $1, avatar_url = $2 
-   WHERE id = $3
-   RETURNING id, username, email, bio, avatar_url`,
+        SET bio = $1, avatar_url = $2 
+        WHERE id = $3
+        RETURNING id, username, email, bio, avatar_url`,
       [bio, avatar_url, userId],
     );
 
