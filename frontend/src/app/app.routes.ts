@@ -124,6 +124,13 @@ export const routes: Routes = [
   },
 
   {
+    path: 'not-found',
+    title: 'LinkHub | Not Found',
+    loadComponent: () =>
+      import('./features/not-found/not-found').then((m) => m.NotFound),
+  },
+
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full',

@@ -1,10 +1,11 @@
-import { Component, computed, DestroyRef, inject } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PublicProfileService } from '../../core/services/public-profile.service';
-import { switchMap } from 'rxjs';
+import { of, switchMap, tap } from 'rxjs';
 import { UrlCard } from '../../shared/components/url-card/url-card';
 import { UserLink } from '../../core/types/user.type';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-public-profile',
@@ -19,17 +20,33 @@ import { UserLink } from '../../core/types/user.type';
     '[style.--button-text]': 'theme()?.button_text',
   },
 })
-export class PublicProfile {
+export class PublicProfile implements OnInit {
   private readonly profileService = inject(PublicProfileService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly authService = inject(AuthService);
   readonly router = inject(Router);
+
+  ngOnInit(): void {}
 
   readonly publicProfile = toSignal(
     this.activatedRoute.paramMap.pipe(
       switchMap((paramMap) => {
         const username = paramMap.get('username');
-        return this.profileService.getUserProfile(username!);
+
+        if (!username) {
+          this.router.navigateByUrl('/not-found');
+          return of(null);
+        }
+
+        return this.profileService.getUserProfile(username).pipe(
+          tap((response) => {
+            if (!response || !response.user.is_public) {
+              this.router.navigateByUrl('/not-found');
+              return;
+            }
+          }),
+        );
       }),
     ),
   );

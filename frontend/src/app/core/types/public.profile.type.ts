@@ -13,6 +13,7 @@ export interface PublicProfileInterface {
   bio: string;
   avatar_url: null;
   preferences: ThemePreset;
+  is_public: boolean;
 }
 
 export type PublicUserLink = Omit<UserLink, 'click_count' | 'user_id'>;

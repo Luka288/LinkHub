@@ -53,7 +53,6 @@ export class SettingsService {
   }
 
   updateProfileVisibility(is_public: boolean) {
-    console.log(is_public);
     return this.http.patch<{ is_public: boolean }>(
       `${BASE_URL}/profile/visibility`,
       { is_public },

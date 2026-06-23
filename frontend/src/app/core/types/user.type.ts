@@ -8,6 +8,7 @@ export interface UserResponse {
   username: string;
   links: UserLink[];
   preferences: ThemePreset;
+  is_public: boolean;
 }
 
 export interface UserLink {

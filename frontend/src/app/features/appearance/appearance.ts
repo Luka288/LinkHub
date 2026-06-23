@@ -24,10 +24,16 @@ export class Appearance {
   readonly newTheme = signal<ThemePreset | null>(null);
 
   readonly selectedTheme = computed(() => {
+    const currentTheme = this.newTheme();
+
+    if (!currentTheme) {
+      return false;
+    }
+
     const currentUser = this.user();
     const oldThemeId = currentUser?.preferences?.preset_id;
 
-    return oldThemeId !== this.newTheme()?.preset_id;
+    return oldThemeId !== currentTheme.preset_id;
   });
 
   updateTheme(preset: ThemePreset): void {

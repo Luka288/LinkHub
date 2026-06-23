@@ -100,7 +100,10 @@
         <span>Anyone with your link can view your page</span>
       </div>
 
-      <app-toggle (toggled)="toggleVisibility($event)"></app-toggle>
+      <app-toggle
+        [isActive]="user()!.is_public"
+        (toggled)="isPublic.next($event)"
+      ></app-toggle>
     </div>
   </div>
 </div>

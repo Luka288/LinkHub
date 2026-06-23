@@ -17,7 +17,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { UrlCard } from '../../shared/components/url-card/url-card';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { UserLink } from '../../core/types/user.type';
 import { LinkModalData } from '../../core/types/modal.type';
 
@@ -36,8 +36,8 @@ export class Links {
   readonly user = this.authService.currentUser;
 
   private readonly toggleAction = new Subject<UpdateLinkPayload>();
-  readonly toggleAction$ = this.toggleAction
-    .pipe(
+  readonly toggleAction$ = toSignal(
+    this.toggleAction.pipe(
       debounceTime(400),
       distinctUntilChanged(),
       switchMap((payload) => {
@@ -48,8 +48,8 @@ export class Links {
         });
       }),
       takeUntilDestroyed(this.destroyRef),
-    )
-    .subscribe();
+    ),
+  );
 
   onToggleChanged(payload: UpdateLinkPayload) {
     this.toggleAction.next(payload);

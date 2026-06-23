@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -14,7 +14,18 @@ import {
   toObservable,
   toSignal,
 } from '@angular/core/rxjs-interop';
-import { forkJoin, of, startWith, Subject } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  EMPTY,
+  forkJoin,
+  of,
+  startWith,
+  Subject,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { toFieldResult } from '../../../core/utils/rxjs.utils';
 import { SettingsService } from '../../../core/services/settings.service';
 
@@ -30,6 +41,32 @@ export class Account {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly user = this.authService.currentUser;
+
+  readonly isPublic = new Subject<boolean>();
+
+  readonly visibilityUpdate = toSignal(
+    this.isPublic.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((result: boolean) => {
+        if (result === this.user()?.is_public) {
+          return of(null);
+        }
+
+        return this.settingsService.updateProfileVisibility(result).pipe(
+          tap(() => {
+            this.user.update((u) => (u ? { ...u, is_public: result } : u));
+          }),
+
+          catchError((err) => {
+            console.error('Failed to change visibility profile:', err);
+            return of(null);
+          }),
+        );
+      }),
+    ),
+    { initialValue: null },
+  );
 
   readonly accountForm = new FormGroup({
     username: new FormControl(this.user()?.username ?? '', [
@@ -70,8 +107,6 @@ export class Account {
       const { username, currentPassword, password } =
         this.accountForm.getRawValue();
 
-      console.log('raw values', { username, currentPassword, password });
-
       if (!this.usernameChanged() && !this.passwordChanged()) return;
 
       const usernameCall$ = this.usernameChanged()
@@ -104,7 +139,6 @@ export class Account {
   }
 
   toggleVisibility(isVisible: boolean): void {
-    console.log(isVisible);
     this.settingsService
       .updateProfileVisibility(isVisible)
       .subscribe(console.log);

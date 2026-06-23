@@ -1,0 +1,134 @@
+@use "../../../styles/mixins.scss" as *;
+@use "../../../styles/variables.scss" as *;
+
+.not-found-container {
+  @include flex(center, center, column);
+  min-height: 100vh;
+  background: radial-gradient(
+    circle at 50% 50%,
+    lighten($bg-base, 2%) 0%,
+    $bg-base 100%
+  );
+  padding: $spacing-lg;
+  font-family: $font-inter;
+}
+
+.card-wrapper {
+  max-width: 480px;
+  width: 100%;
+  @include flex(center, center, column, $spacing-xl);
+  background-color: $bg-card;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  //   box-shadow: $shadow-lg;
+  padding: $spacing-2xl $spacing-xl;
+  text-align: center;
+  transition: $transition;
+}
+
+.error-illustration {
+  @include flex-center(row, $spacing-sm);
+  position: relative;
+
+  .ghost-emoji {
+    font-size: 3.5rem;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .error-code {
+    font-family: $font-montserrat;
+    font-size: $font-3xl;
+    font-weight: 800;
+    color: $dark-purple;
+    margin: 0;
+    line-height: 1;
+    background: linear-gradient(135deg, $dark-purple, $primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.message-group {
+  h2 {
+    font-family: $font-montserrat;
+    font-size: $font-xl;
+    color: $text-primary;
+    font-weight: 700;
+    margin-bottom: $spacing-sm;
+  }
+
+  p {
+    font-size: $font-sm;
+    color: $text-secondary;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+.divider {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid $border;
+  line-height: 0.1em;
+  margin: $spacing-xs 0;
+
+  span {
+    background: $bg-card;
+    padding: 0 $spacing-sm;
+    color: $text-muted;
+    font-size: $font-sm;
+    font-style: italic;
+  }
+}
+
+.action-group {
+  @include flex(center, center, column, $spacing-sm);
+  width: 100%;
+
+  .btn {
+    width: 100%;
+    padding: $spacing-md;
+    border-radius: $radius-md;
+    font-weight: 600;
+    font-size: $font-sm;
+    cursor: pointer;
+    transition: $transition;
+    border: none;
+    outline: none;
+
+    &.btn-primary {
+      background-color: $primary;
+      color: $white;
+      box-shadow: $shadow-primary;
+
+      &:hover {
+        background-color: $primary-hover;
+        transform: translateY(-1px);
+      }
+    }
+
+    &.btn-secondary {
+      background-color: transparent;
+      color: $text-secondary;
+      border: 1px solid $border;
+
+      &:hover {
+        background-color: $bg-hover;
+        color: $text-active;
+        border-color: $border-focus;
+      }
+    }
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
