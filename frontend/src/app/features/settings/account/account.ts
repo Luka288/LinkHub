@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, computed, DestroyRef, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -14,7 +14,7 @@ import {
   toObservable,
   toSignal,
 } from '@angular/core/rxjs-interop';
-import { forkJoin, of, Subject } from 'rxjs';
+import { forkJoin, of, startWith, Subject } from 'rxjs';
 import { toFieldResult } from '../../../core/utils/rxjs.utils';
 import { SettingsService } from '../../../core/services/settings.service';
 
@@ -40,34 +40,48 @@ export class Account {
       Validators.minLength(8),
       Validators.maxLength(16),
     ]),
-    currentPassword: new FormControl(''),
+    currentPassword: new FormControl('', []),
+  });
+
+  readonly formValue = toSignal(
+    this.accountForm.valueChanges.pipe(
+      startWith(this.accountForm.getRawValue()),
+    ),
+  );
+
+  readonly usernameChanged = computed(() => {
+    return this.formValue()?.username !== this.user()?.username;
+  });
+
+  readonly passwordChanged = computed(() => {
+    return !!this.formValue()?.password;
+  });
+
+  readonly hasChanges = computed(() => {
+    return this.usernameChanged() || this.passwordChanged();
   });
 
   onSubmit(): void {
     try {
       if (this.accountForm.invalid) {
-        console.log('invalid form');
         return;
       }
 
       const { username, currentPassword, password } =
         this.accountForm.getRawValue();
 
-      const usernameChanged = username && username !== this.user()?.username;
-      const passwordChanged = !!password;
-
       console.log('raw values', { username, currentPassword, password });
 
-      if (!usernameChanged && !passwordChanged) return;
+      if (!this.usernameChanged() && !this.passwordChanged()) return;
 
-      const usernameCall$ = usernameChanged
+      const usernameCall$ = this.usernameChanged()
         ? toFieldResult(
             this.settingsService.updateUsername(username!),
             'Failed to update username.',
           )
         : of(undefined);
 
-      const passwordCall$ = passwordChanged
+      const passwordCall$ = this.passwordChanged()
         ? toFieldResult(
             this.settingsService.updatePassword(
               currentPassword ?? '',
@@ -87,5 +101,12 @@ export class Account {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  toggleVisibility(isVisible: boolean): void {
+    console.log(isVisible);
+    this.settingsService
+      .updateProfileVisibility(isVisible)
+      .subscribe(console.log);
   }
 }

@@ -9,7 +9,7 @@
         @for (item of themes; track $index) {
           <app-thumbnail
             [preset]="item"
-            (thubnailEmitter)="selectedTheme.set($event)"
+            (thubnailEmitter)="newTheme.set($event)"
           />
         }
       </div>
@@ -19,15 +19,13 @@
       <app-button
         [disabled]="!selectedTheme()"
         [variant]="'primary'"
-        (clicked)="updateTheme(selectedTheme()!)"
+        (clicked)="updateTheme(newTheme()!)"
       >
         Save
       </app-button>
 
       @if (selectedTheme()) {
-        <app-button
-          [variant]="'secondary'"
-          (clicked)="this.selectedTheme.set(null)"
+        <app-button [variant]="'secondary'" (clicked)="this.newTheme.set(null)"
           >Cancel</app-button
         >
       }
@@ -35,6 +33,6 @@
   </aside>
 
   <aside id="preview">
-    <app-preview [data]="user()" [themePreview]="selectedTheme()" />
+    <app-preview [data]="user()" [themePreview]="newTheme()" />
   </aside>
 </section>

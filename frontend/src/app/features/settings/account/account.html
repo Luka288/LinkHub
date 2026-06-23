@@ -16,12 +16,28 @@
             formControlName="username"
           />
         </div>
-        <div class="warn">
-          <span
-            ><i class="fa-solid fa-triangle-exclamation"></i> Changing this
-            updates your public link</span
-          >
-        </div>
+        @if (
+          accountForm.controls.username.hasError("minlength") &&
+          accountForm.controls.username.touched
+        ) {
+          <p class="error">Username must be at least 3 characters long</p>
+        }
+
+        @if (
+          accountForm.controls.username.hasError("maxlength") &&
+          accountForm.controls.username.touched
+        ) {
+          <p class="error">Username must be less then 16 characters long</p>
+        }
+
+        @if (accountForm.controls.username.valid) {
+          <div class="warn">
+            <span
+              ><i class="fa-solid fa-triangle-exclamation"></i> Changing this
+              updates your public link</span
+            >
+          </div>
+        }
       </div>
 
       <div class="form-wrapper">
@@ -42,11 +58,33 @@
           id="password"
           formControlName="password"
         />
+
+        @if (
+          accountForm.controls.password.hasError("minlength") &&
+          accountForm.controls.password.touched
+        ) {
+          <p class="error">Password must be more then 8 characters long</p>
+        }
+
+        @if (
+          accountForm.controls.password.hasError("maxlength") &&
+          accountForm.controls.password.touched
+        ) {
+          <p class="error">Password must be less then 16 characters long</p>
+        }
       </div>
 
       <div class="btn-wrapper">
-        <app-button variant="primary" (clicked)="onSubmit()">Save</app-button>
-        <app-button variant="secondary">Cancel</app-button>
+        <app-button
+          variant="primary"
+          [disabled]="!hasChanges()"
+          (clicked)="onSubmit()"
+          >Save</app-button
+        >
+
+        @if (hasChanges()) {
+          <app-button variant="secondary">Cancel</app-button>
+        }
       </div>
     </form>
   </div>
@@ -62,7 +100,7 @@
         <span>Anyone with your link can view your page</span>
       </div>
 
-      <app-toggle></app-toggle>
+      <app-toggle (toggled)="toggleVisibility($event)"></app-toggle>
     </div>
   </div>
 </div>

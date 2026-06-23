@@ -70,15 +70,33 @@
           height: 100%;
           flex: 1;
           background: transparent;
+
+          &.invalid {
+            background-color: rgba($error, 0.05);
+            border-color: rgba($error, 0.4);
+
+            &:focus {
+              border-color: $error;
+              box-shadow: 0 0 0 3px rgba($error, 0.1);
+              outline: none;
+            }
+          }
         }
+      }
+
+      .error {
+        color: $error;
+        font-family: $font-roboto;
+        margin: 0;
       }
     }
 
     .btn-wrapper {
+      width: 100%;
       @include flex($flex-direction: row, $gap: 15px);
 
       app-button {
-        width: 50%;
+        width: 45%;
       }
     }
   }

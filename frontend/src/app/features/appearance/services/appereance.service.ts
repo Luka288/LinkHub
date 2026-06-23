@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { ThemePreset } from '../themes/themes';
-import { BASE_URL } from '../consts/api.endpoint';
+import { ThemePreset } from '../../../core/themes/themes';
+import { BASE_URL } from '../../../core/consts/api.endpoint';
 
 @Injectable({
   providedIn: 'root',

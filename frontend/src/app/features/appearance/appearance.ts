@@ -1,11 +1,11 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { ThemePreset, APPEARANCE_PRESETS } from '../../core/themes/themes';
 import { Thumbnail } from '../../shared/components/thumbnail/thumbnail';
 import { Preview } from '../../shared/components/preview/preview';
 import { AuthService } from '../../core/services/auth.service';
-import { AppearanceService } from '../../core/services/appereance.service';
 import { Button } from '../../shared/ui/button/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AppearanceService } from './services/appereance.service';
 
 @Component({
   selector: 'app-appearance',
@@ -18,18 +18,24 @@ export class Appearance {
   private readonly appearanceService = inject(AppearanceService);
   private readonly destroyRef = inject(DestroyRef);
 
-  readonly themes: ThemePreset[] = APPEARANCE_PRESETS;
   readonly user = this.authService.currentUser;
-  readonly selectedTheme = signal<ThemePreset | null>(null);
+
+  readonly themes: ThemePreset[] = APPEARANCE_PRESETS;
+  readonly newTheme = signal<ThemePreset | null>(null);
+
+  readonly selectedTheme = computed(() => {
+    const currentUser = this.user();
+    const oldThemeId = currentUser?.preferences?.preset_id;
+
+    return oldThemeId !== this.newTheme()?.preset_id;
+  });
 
   updateTheme(preset: ThemePreset): void {
-    this.selectedTheme.set(preset);
     this.appearanceService
       .updateAppearance(preset)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response) => {
-          this.selectedTheme.set(null);
           this.user.update((u) => (u ? { ...u, preferences: response } : u));
         },
       });
