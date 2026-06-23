@@ -259,7 +259,7 @@ export const updateProfileVisibility = async (
   response: Response,
 ) => {
   try {
-    const userId = request.body.user_id;
+    const userId = request.user?.userId;
     const { is_public } = request.body;
 
     if (!userId) {
@@ -267,7 +267,7 @@ export const updateProfileVisibility = async (
       return;
     }
 
-    if (!is_public) {
+    if (typeof is_public !== "boolean") {
       response.status(500).json({ error: "Invalid status" });
       return;
     }
