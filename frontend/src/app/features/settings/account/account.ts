@@ -137,10 +137,4 @@ export class Account {
       console.log(error);
     }
   }
-
-  toggleVisibility(isVisible: boolean): void {
-    this.settingsService
-      .updateProfileVisibility(isVisible)
-      .subscribe(console.log);
-  }
 }

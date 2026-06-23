@@ -19,7 +19,7 @@ export const getProfile = async (
     const [userResult, linksResult, preferencesResult] = await Promise.all([
       pool.query(
         `
-        SELECT id, username, email, bio, avatar_url
+        SELECT id, username, email, bio, avatar_url, is_public
         FROM users
         WHERE id = $1
         `,
