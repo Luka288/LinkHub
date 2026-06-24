@@ -13,7 +13,12 @@
         }
       </div>
       <div class="profile-details">
-        <p>@{{ publicProfile()?.user?.username }}</p>
+        <p>
+          @{{
+            publicProfile()?.user?.display_name ||
+              publicProfile()?.user?.username
+          }}
+        </p>
         <span>{{ publicProfile()?.user?.bio }}</span>
       </div>
     </div>

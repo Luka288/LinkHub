@@ -1,0 +1,105 @@
+@use "../../../../styles/mixins.scss" as *;
+@use "../../../../styles/variables.scss" as *;
+
+#profile-settings {
+  .data-container {
+    max-width: 550px;
+    min-height: 250px;
+    background-color: $white;
+    border-radius: $radius-md;
+    border: 1px solid $border;
+    box-sizing: border-box;
+    padding: 20px;
+  }
+
+  form {
+    margin-top: 20px;
+    @include flex($flex-direction: column, $gap: 20px);
+
+    .form-wrapper {
+      @include flex($flex-direction: column, $gap: 5px);
+
+      label {
+        font-family: $font-roboto;
+      }
+
+      .warn {
+        span {
+          color: $warning;
+          font-family: $font-roboto;
+        }
+      }
+
+      input:not(.username-input input) {
+        width: 100%;
+        height: 42px;
+        box-sizing: border-box;
+        padding: 10px;
+        font-family: $font-inter;
+        outline: none;
+        border: 2px solid $border;
+        border-radius: $radius-md;
+      }
+
+      .username-input {
+        display: flex;
+        align-items: center;
+        height: 42px;
+        border: 2px solid $border;
+        border-radius: $radius-md;
+        padding: 0 10px;
+        box-sizing: border-box;
+        background: $white;
+
+        .prefix {
+          color: $text-muted;
+          font-family: $font-inter;
+          white-space: nowrap;
+          user-select: none;
+        }
+
+        input {
+          border: none;
+          outline: none;
+          padding: 0;
+          height: 100%;
+          flex: 1;
+          background: transparent;
+
+          &.invalid {
+            background-color: rgba($error, 0.05);
+            border-color: rgba($error, 0.4);
+
+            &:focus {
+              border-color: $error;
+              box-shadow: 0 0 0 3px rgba($error, 0.1);
+              outline: none;
+            }
+          }
+        }
+      }
+
+      .error {
+        color: $error;
+        font-family: $font-roboto;
+        margin: 0;
+      }
+    }
+
+    .buttons {
+      width: 100%;
+      @include flex($flex-direction: row, $gap: 15px);
+
+      app-button {
+        width: 45%;
+      }
+    }
+  }
+}
+
+.container-title {
+  span {
+    font-size: $font-lg;
+    font-family: $font-roboto;
+  }
+}

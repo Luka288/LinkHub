@@ -1,1 +1,30 @@
-<p>profile works!</p>
+<div id="profile-settings">
+  <div class="data-container">
+    <div class="container-title">
+      <span>Display details</span>
+    </div>
+
+    <form [formGroup]="profileForm">
+      <div class="form-wrapper">
+        <label for="displayName">display name</label>
+        <input
+          type="text"
+          name="displayName"
+          id="displayName"
+          formControlName="displayName"
+        />
+      </div>
+
+      <div class="form-wrapper">
+        <label for="bio">Bio</label>
+        <input type="text" name="bio" id="bio" formControlName="bio" />
+      </div>
+
+      <div class="buttons">
+        <app-button variant="primary">Save</app-button>
+
+        <app-button variant="secondary">Cancel</app-button>
+      </div>
+    </form>
+  </div>
+</div>
