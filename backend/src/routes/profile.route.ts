@@ -3,8 +3,6 @@ import { authMiddleware } from "../middlewares/auth.middleware";
 import {
   getProfile,
   updateAppearance,
-  updateBio,
-  updateDisplayName,
   updatePassword,
   updateProfile,
   updateProfileVisibility,
@@ -21,7 +19,5 @@ router.put("/preferences", updateAppearance);
 router.patch("/username", updateUsername);
 router.patch("/password", updatePassword);
 router.patch("/visibility", updateProfileVisibility);
-router.patch("/displayName", updateDisplayName);
-router.patch("/updateBio", updateBio);
 
 export default router;
