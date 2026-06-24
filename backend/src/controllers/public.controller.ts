@@ -9,7 +9,7 @@ export const getPublicProfile = async (
     const { username } = request.params;
 
     const userResult = await pool.query(
-      "SELECT id, username, bio, avatar_url, is_public FROM users WHERE username = $1",
+      "SELECT id, username, bio, avatar_url, is_public, display_name FROM users WHERE username = $1",
       [username],
     );
 
