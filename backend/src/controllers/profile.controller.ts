@@ -2,6 +2,7 @@ import type { Response } from "express";
 import { AuthenticatedRequest } from "../types/express";
 import bcrypt from "bcrypt";
 import pool from "../config/db";
+import { request } from "node:http";
 
 // private profile endpoint
 export const getProfile = async (
@@ -19,7 +20,7 @@ export const getProfile = async (
     const [userResult, linksResult, preferencesResult] = await Promise.all([
       pool.query(
         `
-        SELECT id, username, email, bio, avatar_url, is_public
+        SELECT id, username, email, bio, avatar_url, is_public, display_name
         FROM users
         WHERE id = $1
         `,
@@ -275,6 +276,56 @@ export const updateProfileVisibility = async (
     const result = await pool.query(
       `UPDATE users SET is_public = $1 WHERE id = $2 RETURNING id, is_public`,
       [is_public, userId],
+    );
+
+    response.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: "Server error." });
+  }
+};
+
+export const updateDisplayName = async (
+  request: AuthenticatedRequest,
+  response: Response,
+) => {
+  try {
+    const userId = request.user?.userId;
+    const { display_name } = request.body;
+
+    if (!userId) {
+      response.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    const result = await pool.query(
+      "UPDATE users SET display_name = $1 WHERE id = $2 RETURNING id, display_name",
+      [display_name, userId],
+    );
+
+    response.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: "Server error." });
+  }
+};
+
+export const updateBio = async (
+  request: AuthenticatedRequest,
+  response: Response,
+) => {
+  try {
+    const userId = request.user?.userId;
+    const { bio } = request.body;
+
+    if (!userId) {
+      response.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    const result = await pool.query(
+      "UPDATE users SET bio = $1 WHERE id = $2 RETURNING bio, id",
+      [bio, userId],
     );
 
     response.json(result.rows[0]);
