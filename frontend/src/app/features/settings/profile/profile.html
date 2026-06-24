@@ -18,12 +18,25 @@
       <div class="form-wrapper">
         <label for="bio">Bio</label>
         <input type="text" name="bio" id="bio" formControlName="bio" />
+        @if (
+          profileForm.controls.bio.hasError("maxlength") &&
+          profileForm.controls.bio.touched
+        ) {
+          <p class="error">Bio must be less then 120 characters</p>
+        }
       </div>
 
       <div class="buttons">
-        <app-button variant="primary">Save</app-button>
+        <app-button
+          variant="primary"
+          [disabled]="!formChanged()"
+          (clicked)="onSubmit()"
+          >Save</app-button
+        >
 
-        <app-button variant="secondary">Cancel</app-button>
+        @if (formChanged()) {
+          <app-button variant="secondary">Cancel</app-button>
+        }
       </div>
     </form>
   </div>

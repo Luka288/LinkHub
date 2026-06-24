@@ -1,5 +1,5 @@
 import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
-import { ThemePreset, APPEARANCE_PRESETS } from '../../core/themes/themes';
+import { ThemePreset, APPEARANCE_PRESETS } from '../../core/consts/themes';
 import { Thumbnail } from '../../shared/components/thumbnail/thumbnail';
 import { Preview } from '../../shared/components/preview/preview';
 import { AuthService } from '../../core/services/auth.service';

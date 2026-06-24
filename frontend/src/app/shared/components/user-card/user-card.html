@@ -12,7 +12,11 @@
   <div class="user-info">
     <div class="user-names">
       <span class="username">{{ userData()?.username }}</span>
-      <span class="handle">&#64;{{ userData()?.username?.toLowerCase() }}</span>
+      <span class="handle"
+        >&#64;{{
+          userData()?.display_name || userData()?.username?.toLowerCase()
+        }}</span
+      >
     </div>
 
     @if (userData()?.bio) {

@@ -1,4 +1,4 @@
-import { ThemePreset } from '../themes/themes';
+import { ThemePreset } from '../consts/themes';
 import { UserLink } from './user.type';
 
 export interface PublicProfileResponse {

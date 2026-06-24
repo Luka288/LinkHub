@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { ThemePreset } from '../../../core/themes/themes';
+import { ThemePreset } from '../../../core/consts/themes';
 
 @Component({
   selector: 'app-thumbnail',

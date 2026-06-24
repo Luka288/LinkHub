@@ -1,4 +1,4 @@
-import { ThemePreset } from '../themes/themes';
+import { ThemePreset } from '../consts/themes';
 
 export interface UserResponse {
   avatar_url: string | null;

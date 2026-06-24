@@ -6,7 +6,7 @@ import {
   input,
 } from '@angular/core';
 import { UserResponse } from '../../../core/types/user.type';
-import { ThemePreset } from '../../../core/themes/themes';
+import { ThemePreset } from '../../../core/consts/themes';
 import { compileClassDebugInfo } from '@angular/compiler';
 
 @Component({

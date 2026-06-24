@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { tap } from 'rxjs';
 import { ENABLE_LOADING } from '../tokens/http.token';
 import { AlertService, AlertVariant } from './alert.service';
+import { buildComponent } from '@angular/cdk/schematics';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +57,34 @@ export class SettingsService {
     return this.http.patch<{ is_public: boolean }>(
       `${BASE_URL}/profile/visibility`,
       { is_public },
+    );
+  }
+
+  updateDisplayName(displayName: string) {
+    return this.http
+      .patch(`${BASE_URL}/profile/displayName`, {
+        display_name: displayName,
+      })
+      .pipe(
+        tap(() => {
+          this.alertService.displayAlert(
+            'Success',
+            'Display name updated.',
+            AlertVariant.Success,
+          );
+        }),
+      );
+  }
+
+  updateBio(bio: string) {
+    return this.http.patch(`${BASE_URL}/profile/updateBio`, { bio: bio }).pipe(
+      tap(() => {
+        this.alertService.displayAlert(
+          'Success',
+          'Bio updated.',
+          AlertVariant.Success,
+        );
+      }),
     );
   }
 }

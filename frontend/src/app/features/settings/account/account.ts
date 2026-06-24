@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,16 +9,11 @@ import {
 import { AuthService } from '../../../core/services/auth.service';
 import { Button } from '../../../shared/ui/button/button';
 import { Toggle } from '../../../shared/ui/toggle/toggle';
-import {
-  takeUntilDestroyed,
-  toObservable,
-  toSignal,
-} from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import {
   catchError,
   debounceTime,
   distinctUntilChanged,
-  EMPTY,
   forkJoin,
   of,
   startWith,

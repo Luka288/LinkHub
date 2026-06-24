@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { ThemePreset } from '../../../core/themes/themes';
+import { ThemePreset } from '../../../core/consts/themes';
 import { BASE_URL } from '../../../core/consts/api.endpoint';
 
 @Injectable({
