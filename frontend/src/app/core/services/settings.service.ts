@@ -6,6 +6,13 @@ import { tap } from 'rxjs';
 import { ENABLE_LOADING } from '../tokens/http.token';
 import { AlertService, AlertVariant } from './alert.service';
 import { buildComponent } from '@angular/cdk/schematics';
+import { BinaryOperator } from '@angular/compiler';
+
+export interface ProfileUpdatePayload {
+  display_name?: string;
+  bio?: string;
+  avatar_url?: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -60,31 +67,11 @@ export class SettingsService {
     );
   }
 
-  updateDisplayName(displayName: string) {
-    return this.http
-      .patch(`${BASE_URL}/profile/displayName`, {
-        display_name: displayName,
-      })
-      .pipe(
-        tap(() => {
-          this.alertService.displayAlert(
-            'Success',
-            'Display name updated.',
-            AlertVariant.Success,
-          );
-        }),
-      );
-  }
-
-  updateBio(bio: string) {
-    return this.http.patch(`${BASE_URL}/profile/updateBio`, { bio: bio }).pipe(
-      tap(() => {
-        this.alertService.displayAlert(
-          'Success',
-          'Bio updated.',
-          AlertVariant.Success,
-        );
-      }),
-    );
+  updateProfile(payload: ProfileUpdatePayload) {
+    return this.http.patch(`${BASE_URL}/profile`, {
+      bio: payload.bio,
+      display_name: payload.display_name,
+      avatar_url: payload.avatar_url,
+    });
   }
 }

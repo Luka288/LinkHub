@@ -61,14 +61,14 @@ export class Profile {
 
       const displayNameCall$ = this.displayNameChanged()
         ? toFieldResult(
-            this.settingsService.updateDisplayName(displayName),
+            this.settingsService.updateProfile({ display_name: displayName }),
             'Failed to update display name.',
           )
         : of(undefined);
 
       const bioCall$ = this.bioChanged()
         ? toFieldResult(
-            this.settingsService.updateBio(bio),
+            this.settingsService.updateProfile({ bio: bio }),
             'Failed to update bio',
           )
         : of(null);
