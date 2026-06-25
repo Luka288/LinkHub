@@ -94,9 +94,31 @@ export class LinkService {
   }
 
   reorderLinks(payload: { id: number; order_index: number }[]) {
-    return this.http.patch<{ id: number; order_index: number }[]>(
-      `${BASE_URL}/profile/reorder`,
-      { links: payload },
-    );
+    return this.http
+      .patch<
+        { id: number; order_index: number }[]
+      >(`${BASE_URL}/profile/reorder`, { links: payload })
+      .pipe(
+        tap((updatedLinks) => {
+          this.authService.currentUser.update((user) => {
+            if (!user) return user;
+
+            const orderMap = new Map(
+              updatedLinks.map((link) => [link.id, link.order_index]),
+            );
+
+            return {
+              ...user,
+              links: user.links
+                .map((link) =>
+                  orderMap.has(link.id)
+                    ? { ...link, order_index: orderMap.get(link.id)! }
+                    : link,
+                )
+                .sort((a, b) => a.order_index - b.order_index),
+            };
+          });
+        }),
+      );
   }
 }

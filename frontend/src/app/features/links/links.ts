@@ -15,6 +15,7 @@ import {
   filter,
   Subject,
   switchMap,
+  tap,
 } from 'rxjs';
 import { UrlCard } from '../../shared/components/url-card/url-card';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -67,6 +68,7 @@ export class Links {
           })),
         ),
       ),
+
       takeUntilDestroyed(this.destroyRef),
     ),
   );
