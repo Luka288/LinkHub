@@ -92,4 +92,11 @@ export class LinkService {
         }),
       );
   }
+
+  reorderLinks(payload: { id: number; order_index: number }[]) {
+    return this.http.patch<{ id: number; order_index: number }[]>(
+      `${BASE_URL}/profile/reorder`,
+      { links: payload },
+    );
+  }
 }

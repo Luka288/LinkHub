@@ -11,9 +11,16 @@
       </div>
     </div>
 
-    <div class="user-urls">
-      @for (link of user()?.links; track $index) {
+    <div
+      class="user-urls"
+      cdkDropList
+      [cdkDropListData]="user()?.links"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      @for (link of user()?.links; track link.id) {
         <app-url-card
+          cdkDrag
+          [cdkDragData]="link"
           [urlData]="link"
           (toggleChanged)="onToggleChanged($event)"
           (openEdit)="openModify(link)"

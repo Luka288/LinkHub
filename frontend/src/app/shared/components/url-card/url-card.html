@@ -3,6 +3,12 @@
   [style]="!showActions() ? 'cursor: pointer' : 'cursor: default'"
   (click)="emitter.emit()"
 >
+  @if (showActions()) {
+    <div class="drag-handle" cdkDragHandle>
+      <i class="fa-solid fa-grip-vertical"></i>
+    </div>
+  }
+
   <div class="url-info">
     <div class="ico">
       <img [src]="urlData()?.favicon_url" alt="url-ico" draggable="false" />

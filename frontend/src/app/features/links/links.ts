@@ -20,10 +20,15 @@ import { UrlCard } from '../../shared/components/url-card/url-card';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { UserLink } from '../../core/types/user.type';
 import { LinkModalData } from '../../core/types/modal.type';
+import {
+  CdkDragDrop,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-links',
-  imports: [UserCard, Preview, UrlCard],
+  imports: [UserCard, Preview, UrlCard, DragDropModule],
   templateUrl: './links.html',
   styleUrl: './links.scss',
 })
@@ -47,6 +52,21 @@ export class Links {
           is_active: payload.is_active,
         });
       }),
+      takeUntilDestroyed(this.destroyRef),
+    ),
+  );
+
+  private readonly reorderAction = new Subject<UserLink[]>();
+  readonly reorderAction$ = toSignal(
+    this.reorderAction.pipe(
+      switchMap((links) =>
+        this.linkService.reorderLinks(
+          links.map((link, index) => ({
+            id: link.id,
+            order_index: index,
+          })),
+        ),
+      ),
       takeUntilDestroyed(this.destroyRef),
     ),
   );
@@ -85,5 +105,16 @@ export class Links {
         switchMap((result) => this.linkService.modifyLink(result)),
       )
       .subscribe();
+  }
+
+  onDrop(event: CdkDragDrop<UserLink[] | undefined>) {
+    if (event.previousIndex === event.currentIndex) return;
+
+    const links = this.user()?.links;
+    if (!links) return;
+
+    moveItemInArray(links, event.previousIndex, event.currentIndex);
+
+    this.reorderAction.next(links);
   }
 }
