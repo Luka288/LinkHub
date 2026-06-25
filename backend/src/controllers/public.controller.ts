@@ -21,7 +21,7 @@ export const getPublicProfile = async (
     const user = userResult.rows[0];
 
     const linksResult = await pool.query(
-      "SELECT * FROM links WHERE user_id = $1 AND is_active = true",
+      "SELECT * FROM links WHERE user_id = $1 AND is_active = true ORDER BY order_index",
       [user.id],
     );
 

@@ -2,6 +2,7 @@ import { Router } from "express";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import {
   getProfile,
+  reorderLinks,
   updateAppearance,
   updatePassword,
   updateProfile,
@@ -19,5 +20,6 @@ router.put("/preferences", updateAppearance);
 router.patch("/username", updateUsername);
 router.patch("/password", updatePassword);
 router.patch("/visibility", updateProfileVisibility);
+router.patch("/reorder", reorderLinks);
 
 export default router;

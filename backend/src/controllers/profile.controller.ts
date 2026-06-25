@@ -30,7 +30,7 @@ export const getProfile = async (
         SELECT *
         FROM links
         WHERE user_id = $1
-        ORDER BY id
+        ORDER BY order_index
         `,
         [userId],
       ),
@@ -299,5 +299,75 @@ export const updateProfileVisibility = async (
   } catch (error) {
     console.error(error);
     response.status(500).json({ error: "Server error." });
+  }
+};
+
+export const reorderLinks = async (
+  request: AuthenticatedRequest,
+  response: Response,
+) => {
+  const client = await pool.connect();
+
+  try {
+    const userId = request.user?.userId;
+    const { links } = request.body as {
+      links: { id: number; order_index: number }[];
+    };
+
+    if (!userId) {
+      response.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    if (!Array.isArray(links) || links.length === 0) {
+      response.status(400).json({ error: "links must be a non-empty array." });
+      return;
+    }
+
+    for (const link of links) {
+      if (typeof link.id !== "number" || typeof link.order_index !== "number") {
+        response
+          .status(400)
+          .json({ error: "Each link requires numeric id and order_index." });
+        return;
+      }
+    }
+
+    const ids = links.map((l) => l.id);
+
+    await client.query("BEGIN");
+
+    const caseClause = links
+      .map((_, i) => `WHEN id = $${i * 2 + 1} THEN $${i * 2 + 2}::int`)
+      .join(" ");
+    const values = links.flatMap((l) => [l.id, l.order_index]);
+
+    const result = await client.query(
+      `
+      UPDATE links
+      SET order_index = CASE ${caseClause} END
+      WHERE user_id = $${values.length + 1}
+        AND id = ANY($${values.length + 2})
+      RETURNING id, order_index
+      `,
+      [...values, userId, ids],
+    );
+
+    if (result.rows.length !== links.length) {
+      await client.query("ROLLBACK");
+      response
+        .status(403)
+        .json({ error: "One or more links could not be reordered." });
+      return;
+    }
+
+    await client.query("COMMIT");
+    response.json(result.rows);
+  } catch (error) {
+    await client.query("ROLLBACK");
+    console.error(error);
+    response.status(500).json({ error: "Server error." });
+  } finally {
+    client.release();
   }
 };
