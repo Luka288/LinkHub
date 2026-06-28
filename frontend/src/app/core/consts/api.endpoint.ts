@@ -1,3 +1,3 @@
-export const BASE_URL = 'https://linkhub-4u1r.onrender.com';
+import { environment } from '../../../environments/environment';
 
-// http://localhost:3000
+export const BASE_URL = environment.apiUrl;
