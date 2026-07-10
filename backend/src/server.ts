@@ -9,6 +9,10 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 import "./config/db";
 
+const allowedOrigins = (process.env.ALLOWED_ORIGIN || "http://localhost:4200")
+  .split(",")
+  .map((o) => o.trim());
+
 dotenv.config();
 
 const app = express();
@@ -24,7 +28,13 @@ const globalLimiter = rateLimit({
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.ALLOWED_ORIGIN || "http://localhost:4200",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
