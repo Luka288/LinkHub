@@ -3,37 +3,21 @@
 
   <nav>
     <ul>
-      <li
-        routerLink="/dashboard/links"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <i class="fa-solid fa-link"></i>
-        <a>Links</a>
-      </li>
+      @for (item of NavItems; track $index) {
+        <li
+          [routerLink]="
+            item.title === 'Preview'
+              ? ['/' + item.route, user()?.username]
+              : item.route
+          "
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i [class]="item.icon"></i>
 
-      <li
-        routerLink="/dashboard/appearance"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <i class="fa-solid fa-palette"></i>
-        <a>Appearance</a>
-      </li>
-
-      <li
-        routerLink="/dashboard/settings"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: false }"
-      >
-        <i class="fa-solid fa-gear"></i>
-        <a>Settings</a>
-      </li>
-
-      <li>
-        <i class="fa-brands fa-phabricator"></i>
-        <a>Preview</a>
-      </li>
+          <a>{{ item.title }}</a>
+        </li>
+      }
     </ul>
   </nav>
 
