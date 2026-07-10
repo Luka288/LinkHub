@@ -23,6 +23,12 @@ const COOKIE_OPTIONS = {
   maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
+const CLEAR_COOKIE_OPTIONS = {
+  httpOnly: COOKIE_OPTIONS.httpOnly,
+  secure: COOKIE_OPTIONS.secure,
+  sameSite: COOKIE_OPTIONS.sameSite,
+};
+
 export const register = async (request: Request, response: Response) => {
   const { username, email, password } = request.body;
 
@@ -120,11 +126,7 @@ export const login = async (request: Request, response: Response) => {
 };
 
 export const logout = async (request: Request, response: Response) => {
-  response.clearCookie("refresh_token", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none" as const,
-  });
+  response.clearCookie("refresh_token", CLEAR_COOKIE_OPTIONS);
   response.json({ message: "Logged out" });
 };
 
