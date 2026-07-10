@@ -120,7 +120,11 @@ export const login = async (request: Request, response: Response) => {
 };
 
 export const logout = async (request: Request, response: Response) => {
-  response.clearCookie("refresh_token");
+  response.clearCookie("refresh_token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none" as const,
+  });
   response.json({ message: "Logged out" });
 };
 
