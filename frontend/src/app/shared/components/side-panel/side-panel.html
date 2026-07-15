@@ -1,30 +1,27 @@
 <div id="panel">
   <div class="logo" routerLink="">Link<span>Hub</span></div>
-
   <nav>
     <ul>
       @for (item of NavItems; track $index) {
-        <li
-          [routerLink]="
-            item.title === 'Preview'
-              ? ['/' + item.route, user()?.username]
-              : item.route
-          "
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <i [class]="item.icon"></i>
-
-          <a>{{ item.title }}</a>
+        <li>
+          <a
+            [routerLink]="getRoute(item)"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{
+              exact: item.route === '/dashboard/settings' ? false : true,
+            }"
+            [target]="item.target ?? '_self'"
+          >
+            <i [class]="item.icon"></i>
+            {{ item.title }}
+          </a>
         </li>
       }
     </ul>
   </nav>
-
   <div class="panel-footer">
     <button class="logout-btn" (click)="logout()">
-      <i class="fa-solid fa-arrow-right-from-bracket"></i>
-      Logout
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
     </button>
   </div>
 </div>

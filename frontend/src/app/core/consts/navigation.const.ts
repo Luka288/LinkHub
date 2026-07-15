@@ -23,5 +23,6 @@ export const NavItems: NavInterface[] = [
     title: 'Preview',
     route: 'p',
     icon: 'fa-solid fa-phabricator',
+    target: '_blank',
   },
 ];

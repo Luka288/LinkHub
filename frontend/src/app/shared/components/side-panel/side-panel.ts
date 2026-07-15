@@ -27,4 +27,14 @@ export class SidePanel {
         next: () => this.router.navigateByUrl(''),
       });
   }
+
+  getRoute(item: NavInterface): string | string[] {
+    const username = this.user()?.username;
+
+    if (item.title === 'Preview') {
+      return username ? ['/p', username] : ['/not-found'];
+    }
+
+    return item.route;
+  }
 }
