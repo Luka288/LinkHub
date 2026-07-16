@@ -4,6 +4,7 @@ import {
   getProfile,
   reorderLinks,
   updateAppearance,
+  updateDisplayName,
   updatePassword,
   updateProfile,
   updateProfileVisibility,
@@ -17,6 +18,7 @@ router.use(authMiddleware);
 router.get("/", getProfile);
 router.patch("/", updateProfile);
 router.put("/preferences", updateAppearance);
+router.patch("/displayName", updateDisplayName);
 router.patch("/username", updateUsername);
 router.patch("/password", updatePassword);
 router.patch("/visibility", updateProfileVisibility);

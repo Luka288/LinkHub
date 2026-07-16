@@ -302,6 +302,37 @@ export const updateProfileVisibility = async (
   }
 };
 
+export const updateDisplayName = async (
+  request: AuthenticatedRequest,
+  response: Response,
+) => {
+  try {
+    const userId = request.user?.userId;
+    const displayName = request.body.display_name;
+
+    if (!userId) {
+      response.status(500).json({ error: "Unauthorized" });
+
+      return;
+    }
+
+    if (!displayName) {
+      response.status(403).json({ error: "Display name is not provided." });
+      return;
+    }
+
+    const result = await pool.query(
+      "UPDATE users SET display_name = $1 where id = $2 RETURNING id, display_name",
+      [displayName, userId],
+    );
+
+    response.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: "Server error." });
+  }
+};
+
 export const reorderLinks = async (
   request: AuthenticatedRequest,
   response: Response,
@@ -344,12 +375,12 @@ export const reorderLinks = async (
 
     const result = await client.query(
       `
-      UPDATE links
-      SET order_index = CASE ${caseClause} END
-      WHERE user_id = $${values.length + 1}
-        AND id = ANY($${values.length + 2})
-      RETURNING id, order_index
-      `,
+        UPDATE links
+        SET order_index = CASE ${caseClause} END
+        WHERE user_id = $${values.length + 1}
+          AND id = ANY($${values.length + 2})
+        RETURNING id, order_index
+        `,
       [...values, userId, ids],
     );
 
