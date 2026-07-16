@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { UserCard } from '../../shared/components/user-card/user-card';
 import { Preview } from '../../shared/components/preview/preview';
@@ -40,6 +40,8 @@ export class Links {
   private readonly dialog = inject(Dialog);
 
   readonly user = this.authService.currentUser;
+
+  readonly isCopied = signal<boolean>(false);
 
   private readonly toggleAction = new Subject<UpdateLinkPayload>();
   readonly toggleAction$ = toSignal(
@@ -118,5 +120,20 @@ export class Links {
     moveItemInArray(links, event.previousIndex, event.currentIndex);
 
     this.reorderAction.next(links);
+  }
+
+  copyUrl() {
+    const url: string = `${window.location.origin}/p/${this.user()?.username}`;
+
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        this.isCopied.set(true);
+
+        setTimeout(() => {
+          this.isCopied.set(false);
+        }, 2500);
+      })
+      .catch((err) => console.error('Failed to copy URL:', err));
   }
 }

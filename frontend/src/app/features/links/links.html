@@ -17,6 +17,12 @@
       [cdkDropListData]="user()?.links"
       (cdkDropListDropped)="onDrop($event)"
     >
+      <div class="base-action">
+        <button class="copy-url-btn" (click)="copyUrl()">
+          {{ isCopied() ? "Copied!" : "Copy profile link" }}
+        </button>
+      </div>
+
       @for (link of user()?.links; track link.id) {
         <app-url-card
           cdkDrag
