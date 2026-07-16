@@ -4,7 +4,6 @@ import {
   getProfile,
   reorderLinks,
   updateAppearance,
-  updateDisplayName,
   updatePassword,
   updateProfile,
   updateProfileVisibility,
