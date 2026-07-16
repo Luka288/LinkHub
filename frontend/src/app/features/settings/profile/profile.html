@@ -13,6 +13,21 @@
           id="displayName"
           formControlName="displayName"
         />
+        @if (
+          profileForm.controls.displayName.hasError("minlength") &&
+          profileForm.controls.displayName.touched
+        ) {
+          <p class="error">Username must be at least 3 characters long</p>
+        }
+
+        @if (
+          profileForm.controls.displayName.hasError("maxlength") &&
+          profileForm.controls.displayName.touched
+        ) {
+          <p class="error">
+            Username must be 16 characters long or less then 16
+          </p>
+        }
       </div>
 
       <div class="form-wrapper">
@@ -29,13 +44,15 @@
       <div class="buttons">
         <app-button
           variant="primary"
-          [disabled]="!formChanged()"
+          [disabled]="!formChanged() || profileForm.invalid"
           (clicked)="onSubmit()"
           >Save</app-button
         >
 
         @if (formChanged()) {
-          <app-button variant="secondary">Cancel</app-button>
+          <app-button variant="secondary" (clicked)="profileForm.reset()"
+            >Cancel</app-button
+          >
         }
       </div>
     </form>

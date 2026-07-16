@@ -43,7 +43,6 @@ export class PublicProfile implements OnInit {
           tap((response) => {
             if (!response || !response.user.is_public) {
               this.router.navigateByUrl('/not-found');
-              return;
             }
           }),
         );
