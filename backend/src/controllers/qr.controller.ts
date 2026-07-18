@@ -4,7 +4,7 @@ import qrcode from "qrcode";
 import pool from "../config/db";
 
 const getBaseUrl = (): string => {
-  return process.env.VERCEL_ENV === "production"
+  return process.env.NODE_ENV === "production"
     ? process.env.APP_BASE_URL_PROD!
     : process.env.APP_BASE_URL_DEV!;
 };
