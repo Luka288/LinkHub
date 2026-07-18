@@ -49,49 +49,36 @@
       overflow: auto;
 
       .base-action {
-        .copy-url-btn {
-          width: 150px;
-          text-align: center;
-          display: inline-flex;
+        @include flex($flex-direction: row, $gap: 15px);
+
+        .copy-link-btn,
+        .share-qr-btn {
+          flex: 1;
+          display: flex;
           align-items: center;
           justify-content: center;
-          gap: $spacing-sm;
-          padding: $spacing-sm $spacing-md;
-          font-family: $font-inter;
-          font-size: $font-sm;
-          font-weight: 500;
-          color: $primary;
-          background-color: $bg-surface;
-          border: 1px solid $border;
+          gap: $spacing-xs;
+          height: 44px;
           border-radius: $radius-md;
+          font-size: $font-md;
+          font-weight: 500;
           cursor: pointer;
           transition: $transition;
-
-          .icon {
-            flex-shrink: 0;
-            transition: $transition;
-          }
+          border: 1px solid $border;
+          background: $bg-surface;
+          color: $primary;
 
           &:hover {
-            background-color: $bg-hover;
+            background: $bg-hover;
             border-color: $primary;
-            box-shadow: $shadow-sm;
           }
 
           &:active {
-            transform: scale(0.97);
+            transform: scale(0.98);
           }
 
-          &:focus-visible {
-            outline: none;
-            border-color: $border-focus;
-            box-shadow: 0 0 0 3px $primary-light;
-          }
-
-          &.copied {
-            color: $success;
-            border-color: rgba($success, 0.35);
-            background-color: rgba($success, 0.08);
+          i {
+            font-size: 18px;
           }
         }
       }

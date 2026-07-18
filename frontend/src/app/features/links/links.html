@@ -18,8 +18,14 @@
       (cdkDropListDropped)="onDrop($event)"
     >
       <div class="base-action">
-        <button class="copy-url-btn" (click)="copyUrl()">
+        <button class="copy-link-btn" (click)="copyUrl()">
+          <i class="fa-solid fa-link"></i>
           {{ isCopied() ? "Copied!" : "Copy profile link" }}
+        </button>
+
+        <button class="share-qr-btn" (click)="openShare()">
+          <i class="fa-solid fa-qrcode"></i>
+          Share
         </button>
       </div>
 

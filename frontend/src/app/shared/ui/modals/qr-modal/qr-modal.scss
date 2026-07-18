@@ -1,0 +1,12 @@
+@use "../../../../../styles/mixins.scss" as *;
+@use "../../../../../styles/variables.scss" as *;
+
+.qr-modal {
+  width: 460px;
+  min-height: 250px;
+  background: $bg-surface;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  box-sizing: border-box;
+  box-shadow: $shadow-lg;
+}

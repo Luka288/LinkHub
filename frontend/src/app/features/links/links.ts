@@ -26,6 +26,7 @@ import {
   DragDropModule,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { QrModal } from '../../shared/ui/modals/qr-modal/qr-modal';
 
 @Component({
   selector: 'app-links',
@@ -109,6 +110,13 @@ export class Links {
         switchMap((result) => this.linkService.modifyLink(result)),
       )
       .subscribe();
+  }
+
+  openShare() {
+    const ref = this.dialog.open(QrModal, {
+      width: '450px',
+      height: '250px',
+    });
   }
 
   onDrop(event: CdkDragDrop<UserLink[] | undefined>) {
