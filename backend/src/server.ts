@@ -1,9 +1,12 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+dotenv.config();
+
 import authRoute from "./routes/auth.route";
 import linksRoute from "./routes/links.route";
 import profileRoute from "./routes/profile.route";
+import qrRoute from "./routes/qr.route";
 import publicRoute from "./routes/public.route";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
@@ -12,8 +15,6 @@ import "./config/db";
 const allowedOrigins = (process.env.ALLOWED_ORIGIN || "http://localhost:4200")
   .split(",")
   .map((o) => o.trim());
-
-dotenv.config();
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use("/auth", authRoute);
 app.use("/links", linksRoute);
 app.use("/profile", profileRoute);
 app.use("/username", publicRoute);
+app.use("/qr", qrRoute);
 
 const PORT = process.env.PORT || 3000;
 
