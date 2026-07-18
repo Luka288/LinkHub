@@ -4,9 +4,9 @@ import qrcode from "qrcode";
 import pool from "../config/db";
 
 const getBaseUrl = (): string => {
-  return process.env.NODE_ENV === "development"
+  return process.env.NODE_ENV === "production"
     ? process.env.APP_BASE_URL_PROD!
-    : process.env.APP_BASE_URL_APP_BASE_URL_DEV!;
+    : process.env.APP_BASE_URL_DEV!;
 };
 
 export const generateQr = async (
@@ -30,6 +30,8 @@ export const generateQr = async (
 
     const baseUrl = getBaseUrl();
     const profileUrl = `${baseUrl}/p/${user.username}`;
+
+    console.log(profileUrl);
 
     if (!user) {
       response.status(404).json({ error: "User not found" });
