@@ -5,8 +5,8 @@ import pool from "../config/db";
 
 const getBaseUrl = (): string => {
   return process.env.NODE_ENV === "production"
-    ? process.env.APP_BASE_URL_PROD!
-    : process.env.APP_BASE_URL_DEV!;
+    ? "https://link-hub-kovx.vercel.app"!
+    : "http://localhost:3000"!;
 };
 
 export const generateQr = async (
