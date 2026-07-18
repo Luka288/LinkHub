@@ -4,9 +4,9 @@ import qrcode from "qrcode";
 import pool from "../config/db";
 
 const getBaseUrl = (): string => {
-  return process.env.NODE_ENV === "production"
+  return process.env.NODE_ENV === "development"
     ? process.env.APP_BASE_URL_PROD!
-    : process.env.APP_BASE_URL_DEV!;
+    : process.env.APP_BASE_URL_APP_BASE_URL_DEV!;
 };
 
 export const generateQr = async (
