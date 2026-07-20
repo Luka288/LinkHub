@@ -56,11 +56,11 @@ export class PublicProfile implements OnInit {
     const username = this.publicProfile()?.user.username;
     if (!username) return;
 
+    window.open(link.url, '_blank', 'noopener,noreferrer');
+
     this.profileService
       .incrementClick(username, link.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
-    console.log(link);
-    window.open(link.url, '_blank', 'noopener,noreferrer');
   }
 }
