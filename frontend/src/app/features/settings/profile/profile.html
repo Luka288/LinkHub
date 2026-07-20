@@ -20,6 +20,10 @@
           <p class="error">Username must be at least 3 characters long</p>
         }
 
+        @if (profileForm.controls.displayName.hasError("sameAsCurrent")) {
+          <span class="error">This is already your display name.</span>
+        }
+
         @if (
           profileForm.controls.displayName.hasError("maxlength") &&
           profileForm.controls.displayName.touched
@@ -39,17 +43,21 @@
         ) {
           <p class="error">Bio must be less then 120 characters</p>
         }
+
+        @if (profileForm.controls.bio.hasError("sameAsCurrent"); as error) {
+          <span class="error">This is already your bio.</span>
+        }
       </div>
 
       <div class="buttons">
         <app-button
           variant="primary"
-          [disabled]="!formChanged() || profileForm.invalid"
+          [disabled]="profileForm.invalid || !canSubmit()"
           (clicked)="onSubmit()"
           >Save</app-button
         >
 
-        @if (formChanged()) {
+        @if (canSubmit()) {
           <app-button variant="secondary" (clicked)="profileForm.reset()"
             >Cancel</app-button
           >

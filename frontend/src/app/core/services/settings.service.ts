@@ -68,10 +68,20 @@ export class SettingsService {
   }
 
   updateProfile(payload: ProfileUpdatePayload) {
-    return this.http.patch(`${BASE_URL}/profile`, {
-      bio: payload.bio,
-      display_name: payload.display_name,
-      avatar_url: payload.avatar_url,
-    });
+    return this.http
+      .patch(`${BASE_URL}/profile`, {
+        bio: payload.bio,
+        display_name: payload.display_name,
+        avatar_url: payload.avatar_url,
+      })
+      .pipe(
+        tap(() => {
+          this.alertService.displayAlert(
+            'Success',
+            `Profile updated!`,
+            AlertVariant.Success,
+          );
+        }),
+      );
   }
 }
