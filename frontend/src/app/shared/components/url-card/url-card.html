@@ -1,26 +1,37 @@
-<div
-  class="url-card"
-  [style]="!showActions() ? 'cursor: pointer' : 'cursor: default'"
-  (click)="emitter.emit()"
->
-  @if (showActions()) {
+@if (!showActions()) {
+  <a
+    class="url-card"
+    [href]="normalizedUrl()"
+    target="_blank"
+    rel="noopener noreferrer"
+    (click)="emitter.emit()"
+  >
+    <div class="url-info">
+      <div class="ico">
+        <img [src]="urlData()?.favicon_url" alt="url-ico" draggable="false" />
+      </div>
+      <div class="text-wrapper">
+        <h3>{{ urlData()?.title }}</h3>
+        <span>{{ urlData()?.url }}</span>
+      </div>
+    </div>
+  </a>
+} @else {
+  <div class="url-card" style="cursor: default">
     <div class="drag-handle" cdkDragHandle>
       <i class="fa-solid fa-grip-vertical"></i>
     </div>
-  }
 
-  <div class="url-info">
-    <div class="ico">
-      <img [src]="urlData()?.favicon_url" alt="url-ico" draggable="false" />
+    <div class="url-info">
+      <div class="ico">
+        <img [src]="urlData()?.favicon_url" alt="url-ico" draggable="false" />
+      </div>
+      <div class="text-wrapper">
+        <h3>{{ urlData()?.title }}</h3>
+        <span>{{ urlData()?.url }}</span>
+      </div>
     </div>
 
-    <div class="text-wrapper">
-      <h3>{{ urlData()?.title }}</h3>
-      <span>{{ urlData()?.url }}</span>
-    </div>
-  </div>
-
-  @if (showActions()) {
     <div class="card-actions">
       <div class="stats">
         <span class="clicks">{{ urlData()?.click_count }} clicks</span>
@@ -41,5 +52,5 @@
         </button>
       </div>
     </div>
-  }
-</div>
+  </div>
+}

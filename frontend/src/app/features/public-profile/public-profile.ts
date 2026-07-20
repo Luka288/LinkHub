@@ -52,11 +52,9 @@ export class PublicProfile implements OnInit {
 
   readonly theme = computed(() => this.publicProfile()?.preferences);
 
-  openUrl(link: UserLink) {
+  incrementClick(link: UserLink) {
     const username = this.publicProfile()?.user.username;
     if (!username) return;
-
-    window.open(link.url, '_blank', 'noopener,noreferrer');
 
     this.profileService
       .incrementClick(username, link.id)

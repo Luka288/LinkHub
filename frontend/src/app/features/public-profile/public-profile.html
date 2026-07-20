@@ -29,7 +29,7 @@
           <app-url-card
             [urlData]="url"
             [showActions]="false"
-            (emitter)="openUrl(url)"
+            (emitter)="incrementClick(url)"
             [theme]="publicProfile()?.preferences"
           />
         }

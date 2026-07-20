@@ -1,4 +1,11 @@
-import { Component, effect, inject, input, output } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  output,
+} from '@angular/core';
 import { UserLink } from '../../../core/types/user.type';
 import { Toggle } from '../../ui/toggle/toggle';
 import { UpdateLinkPayload } from '../../../core/types/link.types';
@@ -30,6 +37,12 @@ export class UrlCard {
   showActions = input<boolean>(true);
   theme = input<ThemePreset>();
   emitter = output<void>();
+
+  readonly normalizedUrl = computed(() => {
+    const url = this.urlData()?.url;
+    if (!url) return '#';
+    return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+  });
 
   constructor() {
     effect(() => console.log(this.theme()));
