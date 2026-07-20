@@ -61,6 +61,7 @@ export class UrlCard {
     ref.closed
       .pipe(
         filter(Boolean),
+        //! take untill destroyed
         tap(() => this.emitDelete.emit(link!.id)),
       )
       .subscribe();

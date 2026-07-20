@@ -60,6 +60,7 @@ export class PublicProfile implements OnInit {
       .incrementClick(username, link.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
+    console.log(link);
     window.open(link.url, '_blank', 'noopener,noreferrer');
   }
 }
