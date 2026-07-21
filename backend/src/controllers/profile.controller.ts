@@ -70,30 +70,73 @@ export const updateProfile = async (
   try {
     const userId = request.user?.userId;
     const { bio, avatar_url, display_name } = request.body;
+    const displayNameRegex = /^[a-zA-Z0-9 _-]+$/;
 
     if (!userId) {
       response.status(401).json({ error: "Unauthorized" });
       return;
     }
 
-    const fields: Record<string, unknown> = { bio, avatar_url, display_name };
-    const updates = Object.entries(fields).filter(([, v]) => v !== undefined);
+    if (display_name && !displayNameRegex.test(display_name)) {
+      response.status(400).json({
+        error: "Display name contains invalid characters.",
+      });
+      return;
+    }
+
+    const fields: Record<string, unknown> = {
+      bio,
+      avatar_url,
+      display_name,
+    };
+
+    const updates = Object.entries(fields).filter(([, v]) => {
+      if (v === undefined || v === null) return false;
+
+      if (typeof v === "string" && v.trim() === "") return false;
+
+      return true;
+    });
 
     if (updates.length === 0) {
       response.status(400).json({ error: "No fields to update." });
       return;
     }
 
-    const setClause = updates
+    const currentUser = await pool.query(
+      `SELECT id, username, email, bio, avatar_url, display_name
+       FROM users
+       WHERE id = $1`,
+      [userId],
+    );
+
+    const user = currentUser.rows[0];
+
+    if (!user) {
+      response.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    const changedFields = updates.filter(([key, value]) => {
+      return user[key] !== value;
+    });
+
+    if (changedFields.length === 0) {
+      response.status(200).json({ message: "Nothing to update", user });
+      return;
+    }
+
+    const setClause = changedFields
       .map(([key], i) => `${key} = $${i + 1}`)
       .join(", ");
-    const values = updates.map(([, v]) => v);
+
+    const values = changedFields.map(([, v]) => v);
 
     const result = await pool.query(
-      `UPDATE users 
-        SET ${setClause}
-        WHERE id = $${values.length + 1}
-        RETURNING id, username, email, bio, avatar_url, display_name`,
+      `UPDATE users
+       SET ${setClause}
+       WHERE id = $${values.length + 1}
+       RETURNING id, username, email, bio, avatar_url, display_name`,
       [...values, userId],
     );
 
