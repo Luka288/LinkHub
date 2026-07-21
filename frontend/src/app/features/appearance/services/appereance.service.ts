@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { ThemePreset } from '../../../core/consts/themes';
+import { ThemePreset } from '@linkhub/shared';
 import { BASE_URL } from '../../../core/consts/api.endpoint';
 import { PublicProfileService } from '../../../core/services/public-profile.service';
 import { tap } from 'rxjs';

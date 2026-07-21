@@ -1,4 +1,4 @@
-import { ThemePreset } from '../consts/themes';
+import { ThemePreset } from '@linkhub/shared';
 
 export interface UserResponse {
   avatar_url: string | null;

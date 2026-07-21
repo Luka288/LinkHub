@@ -1,12 +1,15 @@
-import { HttpClient, HttpContext } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BASE_URL } from '../consts/api.endpoint';
 import { AuthService } from './auth.service';
 import { tap } from 'rxjs';
-import { ENABLE_LOADING } from '../tokens/http.token';
 import { AlertService, AlertVariant } from './alert.service';
-import { buildComponent } from '@angular/cdk/schematics';
-import { BinaryOperator } from '@angular/compiler';
+import {
+  UpdateProfilePayload,
+  UpdateUsernamePayload,
+  UpdatePasswordPayload,
+  UpdateProfileVisibilityPayload,
+} from '@linkhub/shared';
 
 export interface ProfileUpdatePayload {
   display_name?: string;
@@ -22,12 +25,12 @@ export class SettingsService {
   private readonly authService = inject(AuthService);
   private readonly alertService = inject(AlertService);
 
-  updateUsername(newUsername: string) {
+  updateUsername(newUsername: UpdateUsernamePayload) {
     return this.http
       .patch<{
         id: number;
         username: string;
-      }>(`${BASE_URL}/profile/username`, { username: newUsername })
+      }>(`${BASE_URL}/profile/username`, newUsername)
       .pipe(
         tap((response) => {
           this.authService.currentUser.update((u) =>
@@ -43,11 +46,11 @@ export class SettingsService {
       );
   }
 
-  updatePassword(currentPassword: string, password: string) {
+  updatePassword(payload: UpdatePasswordPayload) {
     return this.http
       .patch(`${BASE_URL}/profile/password`, {
-        currentPassword: currentPassword,
-        newPassword: password,
+        currentPassword: payload.currentPassword,
+        newPassword: payload.newPassword,
       })
       .pipe(
         tap(() => {
@@ -67,7 +70,7 @@ export class SettingsService {
     );
   }
 
-  updateProfile(payload: ProfileUpdatePayload) {
+  updateProfile(payload: UpdateProfilePayload) {
     return this.http
       .patch(`${BASE_URL}/profile`, {
         bio: payload.bio,

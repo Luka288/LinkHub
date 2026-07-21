@@ -1,9 +1,13 @@
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { BASE_URL } from '../consts/api.endpoint';
-import { LoginPayload, RegisterPayload } from '../types/auth.type';
+import {
+  LoginPayload,
+  RegisterPayload,
+  AuthResponse,
+  UserResponse,
+} from '@linkhub/shared';
 import { catchError, finalize, Observable, of, tap } from 'rxjs';
-import { UserResponse } from '../types/user.type';
 import { ENABLE_LOADING } from '../tokens/http.token';
 
 @Injectable({
@@ -23,46 +27,33 @@ export class AuthService {
   }
 
   initialize() {
-    return this.http
-      .post<{
-        access_token: string;
-        user: UserResponse;
-      }>(`${BASE_URL}/auth/refresh`, {})
-      .pipe(
-        tap((result) => {
-          this.accessToken.set(result.access_token);
-          this.currentUser.set(result.user);
-        }),
-        catchError(() => of(null)),
-      );
+    return this.http.post<AuthResponse>(`${BASE_URL}/auth/refresh`, {}).pipe(
+      tap((result) => {
+        this.accessToken.set(result.access_token);
+        this.currentUser.set(result.user);
+      }),
+      catchError(() => of(null)),
+    );
   }
 
   login(payLoad: LoginPayload) {
     this._loading.set(true);
 
-    return this.http
-      .post<{
-        access_token: string;
-        user: UserResponse;
-      }>(`${BASE_URL}/auth/login`, payLoad)
-      .pipe(
-        tap(({ access_token, user }) => {
-          this.accessToken.set(access_token);
-          this.currentUser.set(user);
-        }),
+    return this.http.post<AuthResponse>(`${BASE_URL}/auth/login`, payLoad).pipe(
+      tap(({ access_token, user }) => {
+        this.accessToken.set(access_token);
+        this.currentUser.set(user);
+      }),
 
-        finalize(() => this._loading.set(false)),
-      );
+      finalize(() => this._loading.set(false)),
+    );
   }
 
   register(payload: RegisterPayload) {
     this._loading.set(true);
 
     return this.http
-      .post<{
-        access_token: string;
-        user: UserResponse;
-      }>(`${BASE_URL}/auth/register`, payload)
+      .post<AuthResponse>(`${BASE_URL}/auth/register`, payload)
       .pipe(
         tap(({ access_token, user }) => {
           this.accessToken.set(access_token);

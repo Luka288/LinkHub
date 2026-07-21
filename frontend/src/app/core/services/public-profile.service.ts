@@ -3,7 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { PublicProfileResponse } from '../types/public.profile.type';
 import { BASE_URL } from '../consts/api.endpoint';
 import { Observable, of, tap } from 'rxjs';
-import { ThemePreset } from '../consts/themes';
+import { ThemePreset } from '@linkhub/shared';
 import { ENABLE_LOADING } from '../tokens/http.token';
 
 @Injectable({
