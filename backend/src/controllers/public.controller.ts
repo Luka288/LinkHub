@@ -1,9 +1,10 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import pool from "../config/db";
 
 export const getPublicProfile = async (
   request: Request,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const { username } = request.params;
@@ -40,13 +41,16 @@ export const getPublicProfile = async (
       preferences: preferences.rows[0] ?? null,
     });
   } catch (error) {
-    console.error(error);
-    return response.status(500).json({ error: "Server error" });
+    next(error);
   }
 };
 
 // method to track which user does user clicked
-export const trackClick = async (request: Request, response: Response) => {
+export const trackClick = async (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) => {
   try {
     const { id } = request.params;
 
@@ -60,7 +64,6 @@ export const trackClick = async (request: Request, response: Response) => {
       click_count: result.rows[0].click_count,
     });
   } catch (error) {
-    console.error(error);
-    return response.status(500).json({ error: "Server error" });
+    next(error);
   }
 };

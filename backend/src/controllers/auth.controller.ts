@@ -1,4 +1,4 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import pool from "../config/db";
@@ -29,7 +29,11 @@ const CLEAR_COOKIE_OPTIONS = {
   sameSite: COOKIE_OPTIONS.sameSite,
 };
 
-export const register = async (request: Request, response: Response) => {
+export const register = async (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) => {
   const { username, email, password } = request.body;
 
   try {
@@ -78,12 +82,15 @@ export const register = async (request: Request, response: Response) => {
       },
     });
   } catch (error) {
-    console.error("Register error:", error);
-    response.status(500).json({ error: "Something went wrong" });
+    next(error);
   }
 };
 
-export const login = async (request: Request, response: Response) => {
+export const login = async (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) => {
   const { email, password } = request.body;
 
   try {
@@ -121,11 +128,15 @@ export const login = async (request: Request, response: Response) => {
       },
     });
   } catch (error) {
-    response.status(500).json({ error: "Something went wrong" });
+    next(error);
   }
 };
 
-export const logout = async (request: Request, response: Response) => {
+export const logout = async (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) => {
   response.clearCookie("refresh_token", CLEAR_COOKIE_OPTIONS);
   response.json({ message: "Logged out" });
 };

@@ -1,4 +1,4 @@
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import { AuthenticatedRequest } from "../types/express";
 import qrcode from "qrcode";
 import pool from "../config/db";
@@ -12,6 +12,7 @@ const getBaseUrl = (): string => {
 export const generateQr = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   const userId = request.user?.userId;
 
@@ -46,6 +47,6 @@ export const generateQr = async (
 
     response.status(200).json({ qr });
   } catch (error) {
-    response.status(500).json({ error: "Failed to generate QR code" });
+    next(error);
   }
 };

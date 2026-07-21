@@ -11,6 +11,7 @@ import publicRoute from "./routes/public.route";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 import "./config/db";
+import { errorMiddleWare } from "./middlewares/error.middleware";
 
 const allowedOrigins = (process.env.ALLOWED_ORIGIN || "http://localhost:4200")
   .split(",")
@@ -49,6 +50,8 @@ app.use("/links", linksRoute);
 app.use("/profile", profileRoute);
 app.use("/username", publicRoute);
 app.use("/qr", qrRoute);
+
+app.use(errorMiddleWare);
 
 const PORT = process.env.PORT || 3000;
 

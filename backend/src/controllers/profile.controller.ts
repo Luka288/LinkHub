@@ -1,12 +1,14 @@
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import { AuthenticatedRequest } from "../types/express";
 import bcrypt from "bcrypt";
 import pool from "../config/db";
+import { updateProfileSchema } from "../validators/profile.validator";
 
 // private profile endpoint
 export const getProfile = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
@@ -58,31 +60,26 @@ export const getProfile = async (
       preferences: preferencesResult.rows[0] ?? null,
     });
   } catch (error) {
-    console.error(error);
-    return response.status(500).json({ error: "Server error." });
+    next(error);
   }
 };
 
 export const updateProfile = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
-    const { bio, avatar_url, display_name } = request.body;
-    const displayNameRegex = /^[a-zA-Z0-9 _-]+$/;
 
     if (!userId) {
       response.status(401).json({ error: "Unauthorized" });
       return;
     }
 
-    if (display_name && !displayNameRegex.test(display_name)) {
-      response.status(400).json({
-        error: "Display name contains invalid characters.",
-      });
-      return;
-    }
+    const { bio, avatar_url, display_name } = updateProfileSchema.parse(
+      request.body,
+    );
 
     const fields: Record<string, unknown> = {
       bio,
@@ -91,11 +88,7 @@ export const updateProfile = async (
     };
 
     const updates = Object.entries(fields).filter(([, v]) => {
-      if (v === undefined || v === null) return false;
-
-      if (typeof v === "string" && v.trim() === "") return false;
-
-      return true;
+      return v !== undefined;
     });
 
     if (updates.length === 0) {
@@ -118,7 +111,7 @@ export const updateProfile = async (
     }
 
     const changedFields = updates.filter(([key, value]) => {
-      return user[key] !== value;
+      return user[key] !== value && value !== null;
     });
 
     if (changedFields.length === 0) {
@@ -147,14 +140,14 @@ export const updateProfile = async (
 
     response.json(result.rows[0]);
   } catch (error) {
-    console.error(error);
-    return response.status(500).json({ error: "Server error." });
+    next(error);
   }
 };
 
 export const updateAppearance = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
@@ -214,14 +207,14 @@ export const updateAppearance = async (
 
     response.json(result.rows[0]);
   } catch (error) {
-    console.error(error);
-    return response.status(500).json({ error: "Server error." });
+    next(error);
   }
 };
 
 export const updateUsername = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
@@ -251,19 +244,15 @@ export const updateUsername = async (
     );
 
     response.json(result.rows[0]);
-  } catch (error: any) {
-    if (error.code === "23505") {
-      response.status(409).json({ error: "Username is already taken." });
-      return;
-    }
-    console.error(error);
-    response.status(500).json({ error: "Server error." });
+  } catch (error) {
+    next(error);
   }
 };
 
 export const updatePassword = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
@@ -310,14 +299,14 @@ export const updatePassword = async (
 
     response.json({ success: true });
   } catch (error) {
-    console.error(error);
-    response.status(500).json({ error: "Server error." });
+    next(error);
   }
 };
 
 export const updateProfileVisibility = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
@@ -340,14 +329,14 @@ export const updateProfileVisibility = async (
 
     response.json(result.rows[0]);
   } catch (error) {
-    console.error(error);
-    response.status(500).json({ error: "Server error." });
+    next(error);
   }
 };
 
 export const reorderLinks = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   const client = await pool.connect();
 
@@ -408,8 +397,8 @@ export const reorderLinks = async (
     response.json(result.rows);
   } catch (error) {
     await client.query("ROLLBACK");
-    console.error(error);
-    response.status(500).json({ error: "Server error." });
+
+    next(error);
   } finally {
     client.release();
   }

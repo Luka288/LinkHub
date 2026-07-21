@@ -1,4 +1,4 @@
-import type { Response } from "express";
+import type { NextFunction, Response } from "express";
 import { AuthenticatedRequest } from "../types/express";
 import pool from "../config/db";
 import { icoScrapper } from "../services/icon-scraper.service";
@@ -7,6 +7,7 @@ import { icoScrapper } from "../services/icon-scraper.service";
 export const getLinks = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
@@ -22,8 +23,7 @@ export const getLinks = async (
 
     response.json(result.rows);
   } catch (e) {
-    console.error(e);
-    response.status(500).json({ error: "Server error" });
+    next(e);
   }
 };
 
@@ -31,6 +31,7 @@ export const getLinks = async (
 export const createLink = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
@@ -71,8 +72,7 @@ export const createLink = async (
 
     response.status(201).json(result.rows[0]);
   } catch (error) {
-    console.error(error);
-    return response.status(500).json({ error: "Server error" });
+    next(error);
   }
 };
 
@@ -80,6 +80,7 @@ export const createLink = async (
 export const modifyLink = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
@@ -127,14 +128,14 @@ export const modifyLink = async (
 
     response.json(result.rows[0]);
   } catch (error) {
-    console.error(error);
-    response.status(500).json({ error: "Server error" });
+    next(error);
   }
 };
 
 export const toggleLink = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
@@ -160,14 +161,14 @@ export const toggleLink = async (
 
     response.json(result.rows[0]);
   } catch (e) {
-    console.error(e);
-    response.status(500).json({ error: "Server error" });
+    next(e);
   }
 };
 
 export const deleteLink = async (
   request: AuthenticatedRequest,
   response: Response,
+  next: NextFunction,
 ) => {
   try {
     const userId = request.user?.userId;
@@ -192,7 +193,6 @@ export const deleteLink = async (
 
     response.json({ message: "Link deleted" });
   } catch (error) {
-    console.error(error);
-    response.status(500).json({ error: "Server error" });
+    next(error);
   }
 };
