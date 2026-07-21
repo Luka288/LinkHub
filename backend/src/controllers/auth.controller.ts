@@ -2,6 +2,8 @@ import type { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import pool from "../config/db";
+import { z } from "zod";
+import { loginPayloadSchema, registerPayloadSchema } from "@linkhub/shared";
 
 const generateAccessToken = (userId: number) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET as string, {
@@ -34,7 +36,13 @@ export const register = async (
   response: Response,
   next: NextFunction,
 ) => {
-  const { username, email, password } = request.body;
+  const parsed = registerPayloadSchema.safeParse(request.body);
+  if (!parsed.success) {
+    response.status(400).json({ error: z.treeifyError(parsed.error) });
+    return;
+  }
+
+  const { username, email, password } = parsed.data;
 
   try {
     const existingUser = await pool.query(
@@ -91,7 +99,13 @@ export const login = async (
   response: Response,
   next: NextFunction,
 ) => {
-  const { email, password } = request.body;
+  const parsed = loginPayloadSchema.safeParse(request.body);
+  if (!parsed.success) {
+    response.status(400).json({ error: z.treeifyError(parsed.error) });
+    return;
+  }
+
+  const { email, password } = parsed.data;
 
   try {
     const result = await pool.query("SELECT * FROM users WHERE email = $1", [

@@ -2,6 +2,12 @@ import type { NextFunction, Response } from "express";
 import { AuthenticatedRequest } from "../types/express";
 import pool from "../config/db";
 import { icoScrapper } from "../services/icon-scraper.service";
+import {
+  CreateLinkPayload,
+  createLinkPayloadSchema,
+  updateLinkPayloadSchema,
+} from "@linkhub/shared";
+import { z } from "zod";
 
 // to fetch all the users links (protected)
 export const getLinks = async (
@@ -35,15 +41,16 @@ export const createLink = async (
 ) => {
   try {
     const userId = request.user?.userId;
-    const { title, url } = request.body;
-
     if (!userId) {
       return response.status(401).json({ error: "Unauthorized" });
     }
 
-    if (!title || !url) {
-      return response.status(400).json({ error: "Title and url are required" });
+    const parsed = createLinkPayloadSchema.safeParse(request.body);
+    if (!parsed.success) {
+      return response.status(400).json({ error: z.treeifyError(parsed.error) });
     }
+
+    const { title, url } = parsed.data;
 
     let hostname: string;
     try {
@@ -84,12 +91,19 @@ export const modifyLink = async (
 ) => {
   try {
     const userId = request.user?.userId;
-    const { title, url, id } = request.body;
 
     if (!userId) {
       response.status(401).json({ error: "Unauthorized" });
       return;
     }
+
+    const parsed = updateLinkPayloadSchema.safeParse(request.body);
+    if (!parsed.success) {
+      response.status(400).json({ error: z.treeifyError(parsed.error) });
+      return;
+    }
+
+    const { title, url, id } = parsed.data;
 
     if (!title || !url) {
       response.status(400).json({ error: "Title and url are required" });
