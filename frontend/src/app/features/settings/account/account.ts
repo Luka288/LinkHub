@@ -23,7 +23,6 @@ import {
 } from 'rxjs';
 import { toFieldResult } from '../../../core/utils/rxjs.utils';
 import { SettingsService } from '../../../core/services/settings.service';
-import { O } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-account',
@@ -107,17 +106,17 @@ export class Account {
 
       const usernameCall$ = this.usernameChanged()
         ? toFieldResult(
-            this.settingsService.updateUsername(username!),
+            this.settingsService.updateUsername({ username: username! }),
             'Failed to update username.',
           )
         : of(undefined);
 
       const passwordCall$ = this.passwordChanged()
         ? toFieldResult(
-            this.settingsService.updatePassword(
-              currentPassword ?? '',
-              password!,
-            ),
+            this.settingsService.updatePassword({
+              currentPassword: currentPassword ?? '',
+              newPassword: password!,
+            }),
             'Failed to update password.',
           )
         : of(undefined);

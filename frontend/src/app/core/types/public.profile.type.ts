@@ -1,4 +1,4 @@
-import { ThemePreset } from '../consts/themes';
+import { ThemePreset } from '@linkhub/shared';
 import { UserLink } from './user.type';
 
 export interface PublicProfileResponse {

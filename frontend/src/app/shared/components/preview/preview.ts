@@ -5,9 +5,8 @@ import {
   effect,
   input,
 } from '@angular/core';
-import { UserResponse } from '../../../core/types/user.type';
-import { ThemePreset } from '../../../core/consts/themes';
-import { compileClassDebugInfo } from '@angular/compiler';
+import { UserResponse } from '@linkhub/shared';
+import { ThemePreset } from '@linkhub/shared';
 
 @Component({
   selector: 'app-preview',

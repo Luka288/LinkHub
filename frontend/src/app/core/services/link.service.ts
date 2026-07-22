@@ -1,15 +1,15 @@
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BASE_URL } from '../consts/api.endpoint';
+import { Observable, of, tap } from 'rxjs';
+import { AuthService } from './auth.service';
+import { ENABLE_LOADING } from '../tokens/http.token';
 import {
   CreateLinkPayload,
   DeleteLinkPayload,
   UpdateLinkPayload,
-} from '../types/link.types';
-import { Observable, of, tap } from 'rxjs';
-import { AuthService } from './auth.service';
-import { UserLink } from '../types/user.type';
-import { ENABLE_LOADING } from '../tokens/http.token';
+  UserLink,
+} from '@linkhub/shared';
 
 @Injectable({
   providedIn: 'root',

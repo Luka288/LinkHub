@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { UserResponse } from '../../../core/types/user.type';
+import { UserResponse } from '@linkhub/shared';
 
 @Component({
   selector: 'app-user-card',

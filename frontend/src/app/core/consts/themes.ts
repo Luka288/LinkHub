@@ -1,14 +1,4 @@
-export interface ThemePreset {
-  preset_id: string;
-  label: string;
-  background: string;
-  text_primary: string;
-  text_secondary: string;
-  button_bg: string;
-  button_text: string;
-  border: string;
-  radius: 'sm' | 'md' | 'lg' | 'full';
-}
+import { ThemePreset } from '@linkhub/shared';
 
 export const APPEARANCE_PRESETS: ThemePreset[] = [
   {

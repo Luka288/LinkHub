@@ -2,7 +2,13 @@ import type { NextFunction, Response } from "express";
 import { AuthenticatedRequest } from "../types/express";
 import bcrypt from "bcrypt";
 import pool from "../config/db";
-import { updateProfileSchema } from "../validators/profile.validator";
+import { z } from "zod";
+import {
+  updateUsernameSchema,
+  updateProfileSchema,
+  updatePasswordSchema,
+  updateProfileVisibilitySchema,
+} from "@linkhub/shared";
 
 // private profile endpoint
 export const getProfile = async (
@@ -219,24 +225,18 @@ export const updateUsername = async (
   try {
     const userId = request.user?.userId;
 
-    const { username } = request.body;
-
     if (!userId) {
       response.status(401).json({ error: "Unauthorized" });
       return;
     }
 
-    if (!username) {
-      response.status(500).json({ error: "USERNAME WAS NOT PROVIDED" });
+    const parsed = updateUsernameSchema.safeParse(request.body);
+    if (!parsed.success) {
+      response.status(400).json({ error: z.treeifyError(parsed.error) });
       return;
     }
 
-    if (!username || username.trim().length < 3) {
-      response
-        .status(400)
-        .json({ error: "Username must be at least 3 characters." });
-      return;
-    }
+    const { username } = parsed.data;
 
     const result = await pool.query(
       `UPDATE users SET username = $1 WHERE id = $2 RETURNING id, username`,
@@ -256,19 +256,19 @@ export const updatePassword = async (
 ) => {
   try {
     const userId = request.user?.userId;
-    const { currentPassword, newPassword } = request.body;
 
     if (!userId) {
       response.status(401).json({ error: "Unauthorized" });
       return;
     }
 
-    if (!newPassword || newPassword.length < 8) {
-      response
-        .status(400)
-        .json({ error: "Password must be at least 8 characters." });
+    const parsed = updatePasswordSchema.safeParse(request.body);
+    if (!parsed.success) {
+      response.status(400).json({ error: z.treeifyError(parsed.error) });
       return;
     }
+
+    const { currentPassword, newPassword } = parsed.data;
 
     const userResult = await pool.query(
       `SELECT password FROM users WHERE id = $1`,
@@ -310,12 +310,19 @@ export const updateProfileVisibility = async (
 ) => {
   try {
     const userId = request.user?.userId;
-    const { is_public } = request.body;
 
     if (!userId) {
-      response.status(401).json({ error: "Unauthorized" });
+      response.status(400).json({ error: "Unauthorized" });
       return;
     }
+
+    const parsed = updateProfileVisibilitySchema.safeParse(request.body);
+    if (!parsed.success) {
+      response.status(401).json({ error: z.treeifyError(parsed.error) });
+      return;
+    }
+
+    const { is_public } = parsed.data;
 
     if (typeof is_public !== "boolean") {
       response.status(500).json({ error: "Invalid status" });

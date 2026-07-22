@@ -13,7 +13,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { ConfirmationModalData } from '../../../core/types/modal.type';
 import { ConfirmationModal } from '../../ui/modals/confirmation-modal/confirmation-modal';
 import { filter, tap } from 'rxjs';
-import { ThemePreset } from '../../../core/consts/themes';
+import { ThemePreset } from '@linkhub/shared';
 import { CdkDragHandle } from '@angular/cdk/drag-drop';
 
 @Component({
