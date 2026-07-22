@@ -1,8 +1,32 @@
 <div class="qr-modal">
   <div class="title-container">
-    <p>Profile QR Code</p>
+    <p>Scan to view profile</p>
+    <span>Point any camera at the code</span>
   </div>
+
   <div class="img-sec">
-    <img [src]="qrData()?.qr" alt="" />
+    @if (qrData()?.qr) {
+      <div class="qr-frame">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <div class="scanline"></div>
+        <img [src]="qrData()?.qr" alt="Profile QR code" />
+      </div>
+    } @else {
+      <h1>LOADING QR CODE...</h1>
+    }
+  </div>
+
+  <div class="actions">
+    <app-download-button
+      variant="secondary"
+      [href]="qrData()?.qr"
+      [download]="qrData()?.qr"
+      [ico]="'fa-download'"
+    >
+      Download
+    </app-download-button>
   </div>
 </div>

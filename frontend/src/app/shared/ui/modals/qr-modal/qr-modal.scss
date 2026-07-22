@@ -9,4 +9,143 @@
   padding: $spacing-xl;
   box-sizing: border-box;
   box-shadow: $shadow-lg;
+  @include flex($flex-direction: column, $gap: 15px, $align-items: center);
+
+  .title-container {
+    width: 100%;
+    text-align: left;
+
+    p {
+      font-size: $font-xl;
+      font-family: $font-roboto;
+      margin: 0;
+    }
+
+    span {
+      font-size: $font-md;
+      font-family: $font-roboto;
+      color: $text-secondary;
+    }
+  }
+
+  .img-sec {
+    width: 100%;
+    background: $bg-base;
+    border-radius: $radius-md;
+    padding: $spacing-lg;
+    @include flex(
+      $flex-direction: column,
+      $gap: $spacing-md,
+      $align-items: center
+    );
+
+    .qr-frame {
+      position: relative;
+      width: 216px;
+      height: 216px;
+
+      .corner {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        border: 3px solid $primary;
+        z-index: 1;
+
+        &.tl {
+          top: 0;
+          left: 0;
+          border-right: none;
+          border-bottom: none;
+          border-radius: $radius-sm 0 0 0;
+        }
+
+        &.tr {
+          top: 0;
+          right: 0;
+          border-left: none;
+          border-bottom: none;
+          border-radius: 0 $radius-sm 0 0;
+        }
+
+        &.bl {
+          bottom: 0;
+          left: 0;
+          border-right: none;
+          border-top: none;
+          border-radius: 0 0 0 $radius-sm;
+        }
+
+        &.br {
+          bottom: 0;
+          right: 0;
+          border-left: none;
+          border-top: none;
+          border-radius: 0 0 $radius-sm 0;
+        }
+      }
+
+      img {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        width: 188px;
+        height: 188px;
+      }
+
+      .scanline {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        top: 14px;
+        height: 10px;
+        border-radius: $radius-sm;
+        background: $primary;
+        opacity: 0.85;
+        z-index: 2;
+        animation: qr-scan 2.4s ease-in-out infinite;
+      }
+    }
+  }
+
+  .link-chip {
+    background: $bg-surface;
+    border: 0.5px solid $border;
+    border-radius: $radius-full;
+    padding: 6px 14px;
+    @include flex($flex-direction: row, $gap: 8px, $align-items: center);
+
+    .avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: $primary;
+      color: $white;
+      font-family: $font-roboto;
+      font-size: $font-sm;
+      @include flex($align-items: center, $justify-content: center);
+    }
+
+    span {
+      font-size: $font-sm;
+      font-family: $font-roboto;
+      color: $text-secondary;
+    }
+  }
+}
+
+.actions {
+  width: 100%;
+  @include flex($flex-direction: row, $gap: 10px);
+}
+
+@keyframes qr-scan {
+  0% {
+    top: 14px;
+  }
+  50% {
+    top: 188px;
+  }
+  100% {
+    top: 14px;
+  }
 }

@@ -115,7 +115,6 @@ export class Links {
   openShare() {
     const ref = this.dialog.open(QrModal, {
       width: '450px',
-      height: '250px',
     });
   }
 

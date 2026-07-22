@@ -1,0 +1,40 @@
+@use "../../../../styles/mixins.scss" as *;
+@use "../../../../styles/variables.scss" as *;
+
+:host {
+  width: 100%;
+  display: block;
+}
+
+.base-btn {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  @include flex($align-items: center, $justify-content: center, $gap: 8px);
+  border-radius: $radius-sm;
+  font-size: $font-md;
+  font-family: $font-roboto;
+  font-weight: 500;
+
+  border: 1px solid $border;
+  text-decoration: none;
+  color: $text-secondary;
+
+  transition: $transition;
+  cursor: pointer;
+  margin-top: 8px;
+
+  &:hover {
+    background: $bg-hover;
+    color: $text-primary;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
